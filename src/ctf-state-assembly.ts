@@ -1,0 +1,80 @@
+import {CtfGameState, EvenPieceDistribution, Formation, Piece, PieceCodex, Ruleset, Side} from "common-types";
+import {distributeValuesIntoSlots} from "utilities/data-utilities";
+
+// ==========================================================================
+export const assembleCtfState = (ruleset: Ruleset, formations: Record<Side, Formation>): CtfGameState => {
+    const pieces: Piece[] = [];
+    for (let i = 0; i < ruleset.PIECE_PER_SIDE; i++) {
+        const leftFormationPiece = formations.left[i];
+        pieces.push({
+            direction: "r",
+            name: `left${i}`,
+            side: Side.left,
+            x: leftFormationPiece.x,
+            y: leftFormationPiece.y
+        });
+        const rightFormationPiece = formations.right[i];
+        pieces.push({
+            direction: "l",
+            name: `right${i}`,
+            side: Side.right,
+            x: ruleset.BOARD_W - rightFormationPiece.x,
+            y: rightFormationPiece.y
+        });
+    }
+    return {
+        decidingTurnNumber: 0,
+        distance: {
+            [Side.left]: ruleset.DISTANCE_INITIAL,
+            [Side.right]: ruleset.DISTANCE_INITIAL,
+        },
+        flags: {
+            [Side.left]: null,
+            [Side.right]: null,
+        },
+        pieces: pieces,
+        willpower: {
+            [Side.left]: ruleset.WILLPOWER_INITIAL,
+            [Side.right]: ruleset.WILLPOWER_INITIAL,
+        },
+    };
+}
+
+// ==========================================================================
+export const derivePieceCodex = (pieces: Piece[]): PieceCodex => {
+    const bySide: Record<Side, number[]> = { left: [], right: [] };
+    const byName: Record<string, number> = {};
+    for (let i = 0; i < pieces.length; i++) {
+        const piece = pieces[i];
+        bySide[piece.side].push(i);
+        byName[piece.name] = i;
+    }
+    return {
+        name: byName,
+        side: bySide
+    };
+}
+
+// ==========================================================================
+export const evenPieceDistributionToFormation = (evenPieceDistribution: EvenPieceDistribution, ruleset: Ruleset): Formation => {
+    const spotDistribution = distributeValuesIntoSlots(evenPieceDistribution, ruleset.PIECE_PER_SIDE);
+    const minWidth = ruleset.FLAG_AREA_THICKNESS;
+    const maxWidth = ruleset.BOARD_W / 2 - ruleset.UNUSABLE_SPACE_WIDTH - ruleset.PIECE_R;
+
+    let orderNumber = 0;
+    const formation: Formation = {};
+    Object.entries(spotDistribution).forEach(spotAndPieces => {
+        const [ slot, pieceCount ]: [string, number] = spotAndPieces;
+        const x = minWidth + (maxWidth - minWidth) * parseFloat(slot);
+        const yIncrement = ruleset.BOARD_H / (pieceCount + 1);
+        let y = 0;
+        for (let i = 0; i < pieceCount; i++) {
+            y += yIncrement;
+            formation[orderNumber] = {
+                x, y
+            };
+            orderNumber++;
+        }
+    });
+    return formation;
+}

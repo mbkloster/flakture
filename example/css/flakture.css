@@ -1,0 +1,342 @@
+html {
+    height: 100%;
+}
+
+.flakture-body {
+    align-items: center;
+    background-color: #101010;
+    color: #f0f0f0;
+    display: flex;
+    font: 16px Arial, Helvetica;
+    height: 100%;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+.flakture-game {
+    display: none;
+
+    &.is-ready {
+        display: block;
+    }
+
+    .is-invisible {
+        display: none;
+    }
+
+    .is-hidden {
+        visibility: hidden;
+    }
+
+    .control-bar {
+        background-color: #2a2a2a;
+        font-size: 1.5rem;
+        margin: -4px 0 0;
+        padding: 5px 0;
+
+        .control-bar-willpower {
+            align-items: center;
+            background-color: #505050;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding-left: 3px;
+            padding-right: 3px;
+
+            &.is-blue {
+                background-color: #0000a0;
+            }
+
+            &.is-left {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+            }
+
+            &.is-red {
+                background-color: #a00000;
+            }
+
+            &.is-right {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+        }
+    }
+
+    .control-bar-adjust {
+        cursor: pointer;
+    }
+
+    .control-bar-confirmer {
+        align-items: center;
+        display: flex;
+    }
+
+    .control-bar-confirmer-confirm {
+        background-color: #505050;
+        border: none;
+        border-radius: 3px;
+        box-shadow: none;
+        color: #fff;
+        cursor: pointer;
+
+        i {
+            font-size: 1.35rem;
+        }
+
+        &.is-blue {
+            background-color: #0000d0;
+        }
+
+        &.is-red {
+            background-color: #e00000;
+        }
+    }
+
+    .control-bar-confirmer-confirmed {
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .control-bar-distance {
+        padding: 5px;
+        flex: 3;
+    }
+
+    .control-bar-distance-box {
+        border: 1px solid #fff;
+        height: 20px;
+        position: relative;
+    }
+
+    .control-bar-distance-box-diamond {
+        color: #fff;
+        font-size: 8px;
+        height: 100%;
+        position: absolute;
+        top: 80%;
+        transform: translateY(-50%);
+        width: 1px;
+        z-index: 1;
+    }
+
+    .control-bar-distance-box-fill {
+        background-color: #a0a0a0;
+        height: 100%;
+
+        &.is-blue {
+            background-color: #0000b0;
+        }
+
+        &.is-red {
+            background-color: #b00000;
+        }
+    }
+
+    .control-bar-distance-box-line {
+        background-color: #fff;
+        color: #fff;
+        content: "";
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 1px;
+        z-index: 1;
+    }
+
+    .control-bar-row {
+        align-items: center;
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0;
+
+        > li {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    button {
+        background-color: #202020;
+        border: 1px solid #505050;
+        color: #e0e0e0;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 0 5px;
+        position: relative;
+
+        &:disabled:before {
+            background-color: #808080;
+            content: "";
+            cursor: default;
+            height: 100%;
+            left: 0;
+            opacity: 0.6;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        &.is-blue {
+            background-color: #000060;
+        }
+
+        &.is-red {
+            background-color: #600000;
+        }
+    }
+
+    .control-bar-side-switch {
+        border: 1px solid #505050;
+        color: #e0e0e0;
+        font-weight: bold;
+
+        &.is-blue {
+            background-color: #0000a0;
+        }
+
+        &.control-bar-side-switch-left {
+            border-left-width: 0;
+        }
+
+        &.control-bar-side-switch-right {
+            border-right-width: 0;
+        }
+
+        &.is-red {
+            background-color: #a00000;
+        }
+
+        &.is-selected {
+            border-color: #f0f0f0;
+            color: #fff;
+        }
+
+        &:not(.is-selected) {
+            cursor: pointer;
+        }
+    }
+
+    .control-bar-speed {
+        input[type="radio"] {
+            display: none;
+
+            &:checked + label {
+                background-color: rgba(230, 230, 230, 0.3);
+            }
+        }
+
+        label {
+            border: 1px solid #404040;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 1.2rem;
+            min-width: 32px;
+            padding: 5px;
+            text-align: center;
+
+            &:not(:last-child) {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .control-bar-willpower-label {
+        font-size: 0.75rem;
+    }
+
+    .control-bar-willpower-number {
+        font-weight: bold;
+    }
+
+    .game-context {
+        pointer-events: none;
+    }
+
+    .willpower-bid-popup {
+        background-color: rgba(0, 0, 0, 0.3);
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .willpower-bid-popup-content {
+        background-color: #303030;
+        border: 1px solid #909090;
+        color: #f0f0f0;
+        left: 50%;
+        padding: 10px;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .willpower-bid-popup-form-adjust {
+        background-color: #505050;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+        user-select: none;
+
+        &.is-plus {
+            background-color: #045004;
+        }
+
+        &.is-minus {
+            background-color: #4a0303;
+        }
+    }
+
+    .willpower-bid-popup-form-cancel {
+        background-color: #b00000;
+        color: #fff;
+        display: inline-block;
+        padding: 3px;
+    }
+
+    .willpower-bid-popup-form-input {
+        -moz-appearance: textfield;
+        background-color: transparent;
+        color: #fff;
+        font-size: 24px;
+        max-width: 80px;
+        width: 100%;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+
+    .willpower-bid-popup-header {
+        margin-top: 0;
+    }
+
+    .willpower-bid-popup-numbers {
+        align-items: center;
+        display: flex;
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+    .willpower-bid-popup-form-submit {
+        background-color: #007070;
+        color: #fff;
+        display: inline-block;
+        margin-right: 3px;
+        padding: 3px;
+    }
+}
