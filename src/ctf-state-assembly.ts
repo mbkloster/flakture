@@ -1,4 +1,4 @@
-import {CtfGameState, EvenPieceDistribution, Formation, Piece, PieceCodex, Ruleset, Side} from "common-types";
+import {CtfGameState, EvenPieceDistribution, Formation, Piece, PieceCodex, Ruleset, Side} from "./common-types";
 import {distributeValuesIntoSlots} from "utilities/data-utilities";
 
 // ==========================================================================

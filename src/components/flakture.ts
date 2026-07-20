@@ -9,7 +9,7 @@ import {
     Ruleset,
     Side, SideMove,
     Turn
-} from "common-types";
+} from "../common-types";
 import {
     renderDestinations,
     renderHoveredPiece,

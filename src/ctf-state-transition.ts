@@ -8,9 +8,9 @@ import {
     Ruleset,
     Side, SideMove, TimeSliceMeta,
     Turn,
-} from "common-types";
-import {opponentSide} from "utilities";
-import {circlesCollide, inFlagZone} from "utilities/board-utilities";
+} from "./common-types";
+import {opponentSide} from "./utilities";
+import {circlesCollide, inFlagZone} from "./utilities/board-utilities";
 
 function isLooseFlag(flagState: FlagState): flagState is LooseFlag {
     if (!flagState) { return false; }

@@ -1,6 +1,23 @@
-export { default } from "./components/flakture";
+export {default} from "./components/flakture";
 export * from "./components/flakture";
-export type * from "./common-types";
+export type {
+    CtfGameMovement,
+    CtfGameState,
+    PlayerColor,
+    Coord,
+    Line,
+    Piece,
+    PieceCodex,
+    CtfGameProperties,
+    LooseFlag,
+    Ruleset,
+    RulesetName,
+    TimeSliceMeta,
+    EvenPieceDistribution,
+    FlagState,
+    Turn,
+    SideMove
+} from "./common-types";
 export {Side} from "./common-types"
 export {DEFAULT_RULESET, RULESETS} from "./ctf-defines"
 export * from "./utilities/exceptions"

@@ -1,5 +1,5 @@
 import BaseAnimation from "animations/base-animation";
-import { WILLPOWER_BID_FADE_IN_S, WILLPOWER_BID_OPACITY_MAX } from "ctf-render-defines";
+import { WILLPOWER_BID_FADE_IN_S, WILLPOWER_BID_OPACITY_MAX } from "../ctf-render-defines";
 import { renderWillpowerBidOpacities } from "render/flakture/board";
 const OPACITY_FADE_RATE = WILLPOWER_BID_OPACITY_MAX / WILLPOWER_BID_FADE_IN_S;
 export class WillpowerBidOpacityFade extends BaseAnimation {

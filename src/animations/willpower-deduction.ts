@@ -1,7 +1,7 @@
 import BaseAnimation from "animations/base-animation";
 import {WILLPOWER_DEDUCTION_PER_S} from "ctf-render-defines";
 import Flakture from "components/flakture";
-import {Side} from "common-types";
+import {Side} from "../common-types";
 
 export class WillpowerDeduction extends BaseAnimation {
     currentValue: number

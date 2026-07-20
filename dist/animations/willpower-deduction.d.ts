@@ -1,6 +1,6 @@
 import BaseAnimation from "animations/base-animation";
 import Flakture from "components/flakture";
-import { Side } from "common-types";
+import { Side } from "../common-types";
 export declare class WillpowerDeduction extends BaseAnimation {
     currentValue: number;
     deductionCounterS: number;

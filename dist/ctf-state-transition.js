@@ -1,6 +1,6 @@
-import { BothSides, Side, } from "common-types";
-import { opponentSide } from "utilities";
-import { circlesCollide, inFlagZone } from "utilities/board-utilities";
+import { BothSides, Side, } from "./common-types";
+import { opponentSide } from "./utilities";
+import { circlesCollide, inFlagZone } from "./utilities/board-utilities";
 function isLooseFlag(flagState) {
     if (!flagState) {
         return false;

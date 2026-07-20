@@ -1,4 +1,4 @@
-import { Coord, CtfGameProperties, CtfGameState, Line, Piece, Side, Turn } from "common-types";
+import { Coord, CtfGameProperties, CtfGameState, Line, Piece, Side, Turn } from "./common-types";
 import Flakture from "components/flakture";
 export declare const redeployedPieceMap: (flakture: Flakture) => Record<string, {
     x: number;

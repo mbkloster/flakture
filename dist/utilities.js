@@ -1,4 +1,4 @@
-import { Side } from "common-types";
+import { Side } from "./common-types";
 import { RULESETS } from "./ctf-defines";
 // ==========================================================================
 export const redeployedPieceMap = (flakture) => {

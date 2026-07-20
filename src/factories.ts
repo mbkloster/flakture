@@ -1,4 +1,4 @@
-import {Side, SideMove, Turn} from "common-types";
+import {Side, SideMove, Turn} from "./common-types";
 
 // ==========================================================================
 export const newMove = (): SideMove => {

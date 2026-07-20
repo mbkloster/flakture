@@ -1,7 +1,6 @@
-import {Coord, CtfGameProperties, CtfGameState, Line, Piece, Ruleset, Side, Turn} from "common-types";
+import {Coord, CtfGameProperties, CtfGameState, Line, Piece, Ruleset, Side, Turn} from "./common-types";
 import Flakture from "components/flakture";
 import {RULESETS} from "./ctf-defines";
-import {distSqFromPoint} from "./utilities/board-utilities";
 
 // ==========================================================================
 export const redeployedPieceMap = (flakture: Flakture): Record<string, {x: number, y: number}> => {

@@ -1,5 +1,5 @@
 import BaseAnimation from "animations/base-animation";
-import { BothSides, Side } from "common-types";
+import { BothSides, Side } from "../common-types";
 import { WILLPOWER_BID_PADDING, WILLPOWER_BID_TRAVEL_PER_S } from "../ctf-render-defines";
 export class WillpowerBidPlacementTravel extends BaseAnimation {
     // ==========================================================================

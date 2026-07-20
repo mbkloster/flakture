@@ -1,6 +1,6 @@
 import ApplicationComponent from "components/application-component";
 import { assembleCtfState, derivePieceCodex } from "ctf-state-assembly";
-import { BothSides } from "common-types";
+import { BothSides } from "../common-types";
 import { renderDestinations, renderHoveredPiece, renderInitialBoard, renderMovedPieces, renderRedeployedPieces, renderRedeployLine, renderRedeployPoint, renderSelectedPiece, renderWillpowerBidOpacities, renderWillpowerBids, rerenderFlag, rerenderGameContextTurn, rerenderWillpowerBids } from "render/flakture/board";
 import { clearRenderedDestinations, clearDestinationsAndHideControls, deriveDistanceFillProps, renderControlBar, renderDistanceFill, renderDistanceLine, renderInitialControlBar, sideConfirmedIcon } from "render/flakture/control-bar";
 import { setupBoardHoverAndClick } from "event-handlers";

@@ -1,5 +1,5 @@
 import BaseAnimation from "animations/base-animation";
-import { FONTS, } from "ctf-render-defines";
+import { FONTS, } from "../ctf-render-defines";
 export class Notification extends BaseAnimation {
     // ==========================================================================
     constructor(flakture, text, color, outlineColor, fadeInS, maxOpacityS, fadeOutS) {

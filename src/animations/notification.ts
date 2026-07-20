@@ -1,8 +1,8 @@
 import BaseAnimation from "animations/base-animation";
 import {
     FONTS,
-} from "ctf-render-defines";
-import Flakture from "components/flakture";
+} from "../ctf-render-defines";
+import Flakture from "../components/flakture";
 
 export class Notification extends BaseAnimation {
     aggregateTime: number

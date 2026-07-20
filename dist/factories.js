@@ -1,4 +1,4 @@
-import { Side } from "common-types";
+import { Side } from "./common-types";
 // ==========================================================================
 export const newMove = () => {
     return {

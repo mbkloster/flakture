@@ -1,5 +1,5 @@
 import BaseAnimation from "animations/base-animation";
-import Flakture from "components/flakture";
+import Flakture from "../components/flakture";
 export declare class Notification extends BaseAnimation {
     aggregateTime: number;
     elem: SVGElement;

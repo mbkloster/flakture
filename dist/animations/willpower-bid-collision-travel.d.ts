@@ -1,6 +1,6 @@
 import BaseAnimation from "animations/base-animation";
-import Flakture from "components/flakture";
-import { Coord, Side } from "common-types";
+import Flakture from "../components/flakture";
+import { Coord, Side } from "../common-types";
 export declare class WillpowerBidCollisionTravel extends BaseAnimation {
     flakture: Flakture;
     positions: Record<Side, Coord>;

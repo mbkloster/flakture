@@ -3,8 +3,8 @@ import {
     WILLPOWER_BID_MARGIN_MIN,
     WILLPOWER_BID_PADDING, WILLPOWER_BID_TRAVEL_PER_S
 } from "ctf-render-defines";
-import Flakture from "components/flakture";
-import {BothSides, Coord, Side} from "common-types";
+import Flakture from "../components/flakture";
+import {BothSides, Coord, Side} from "../common-types";
 import {WillpowerDeduction} from "./willpower-deduction";
 
 export class WillpowerBidCollisionTravel extends BaseAnimation {

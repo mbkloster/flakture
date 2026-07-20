@@ -1,4 +1,4 @@
-import { CtfGameMovement, CtfGameState, PieceCodex, Ruleset, Side, SideMove, TimeSliceMeta, Turn } from "common-types";
+import { CtfGameMovement, CtfGameState, PieceCodex, Ruleset, Side, SideMove, TimeSliceMeta, Turn } from "./common-types";
 export declare const distanceCost: (ruleset: Ruleset, ctfGameState: CtfGameState, moves: Record<Side, SideMove | null>, pieceCodex: PieceCodex) => Record<Side, number>;
 export declare const piecesCollide: (ruleset: Ruleset, pieceA: {
     x: number;

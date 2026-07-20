@@ -1,5 +1,5 @@
 import BaseAnimation from "animations/base-animation";
-import {WILLPOWER_BID_FADE_IN_S, WILLPOWER_BID_OPACITY_MAX} from "ctf-render-defines";
+import {WILLPOWER_BID_FADE_IN_S, WILLPOWER_BID_OPACITY_MAX} from "../ctf-render-defines";
 import Flakture from "components/flakture";
 import {renderWillpowerBidOpacities} from "render/flakture/board";
 
