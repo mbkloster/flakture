@@ -29,7 +29,7 @@ export type LooseFlag = {untilDecidingTurnNumber: number, x: number, y: number};
 export type FlagState = null | LooseFlag | number;
 
 export type CtfGameProperties = {
-    aiAssignments: Record<Side, string>
+    aiAssignments: Partial<Record<Side, string>>
     colors: Record<Side, PlayerColor>
     names: Record<Side, string>
     rulesetName: RulesetName

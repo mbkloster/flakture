@@ -32,7 +32,7 @@ export type LooseFlag = {
 };
 export type FlagState = null | LooseFlag | number;
 export type CtfGameProperties = {
-    aiAssignments: Record<Side, string>;
+    aiAssignments: Partial<Record<Side, string>>;
     colors: Record<Side, PlayerColor>;
     names: Record<Side, string>;
     rulesetName: RulesetName;
