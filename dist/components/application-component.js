@@ -1,5 +1,10 @@
 import { AmbiguousElementException, ConflictingInstructionsException, MissingElementException } from "../utilities/exceptions";
 export default class ApplicationComponent {
+    animations;
+    containingElem;
+    elemMap;
+    previousMs;
+    props;
     // ==========================================================================
     constructor(containingElem, props) {
         this.props = props;

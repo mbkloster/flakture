@@ -1,4 +1,4 @@
-import BaseAnimation from "animations/base-animation";
+import BaseAnimation from "./base-animation";
 import Flakture from "../components/flakture";
 export declare class Notification extends BaseAnimation {
     aggregateTime: number;

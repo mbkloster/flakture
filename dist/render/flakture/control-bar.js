@@ -1,7 +1,7 @@
-import { BothSides, Side } from "common-types";
-import { setupClickConfirm, setupClickRedeploy, setupClickSpeedChange, setupClickUndoRedeploy, setupSelectedSideClick, setupUndo, } from "event-handlers";
-import { distanceCost } from "ctf-state-transition";
-import { deriveDeadPieceCount, opponentSide } from "utilities";
+import { BothSides, Side } from "../../common-types";
+import { setupClickConfirm, setupClickRedeploy, setupClickSpeedChange, setupClickUndoRedeploy, setupSelectedSideClick, setupUndo, } from "../../event-handlers";
+import { distanceCost } from "../../ctf-state-transition";
+import { deriveDeadPieceCount, opponentSide } from "../../utilities";
 // ==========================================================================
 export const sideConfirmedIcon = (flakture, side) => {
     return flakture.createElem("i", { attributes: { "class": "fa fa-check control-bar-confirmer-confirmed" } });

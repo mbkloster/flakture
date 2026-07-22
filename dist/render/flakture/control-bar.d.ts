@@ -1,5 +1,5 @@
-import { Side } from "common-types";
-import Flakture from "components/flakture";
+import { Side } from "../../common-types";
+import Flakture from "../../components/flakture";
 type DistanceBarProps = Record<Side, {
     currentFill: number;
     fillAfterDistance: number;

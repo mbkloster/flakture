@@ -1,5 +1,5 @@
 import {CtfGameState, EvenPieceDistribution, Formation, Piece, PieceCodex, Ruleset, Side} from "./common-types";
-import {distributeValuesIntoSlots} from "utilities/data-utilities";
+import {distributeValuesIntoSlots} from "./utilities/data-utilities";
 
 // ==========================================================================
 export const assembleCtfState = (ruleset: Ruleset, formations: Record<Side, Formation>): CtfGameState => {

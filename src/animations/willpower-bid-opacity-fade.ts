@@ -1,7 +1,7 @@
-import BaseAnimation from "animations/base-animation";
+import BaseAnimation from "./base-animation";
 import {WILLPOWER_BID_FADE_IN_S, WILLPOWER_BID_OPACITY_MAX} from "../ctf-render-defines";
-import Flakture from "components/flakture";
-import {renderWillpowerBidOpacities} from "render/flakture/board";
+import Flakture from "../components/flakture";
+import {renderWillpowerBidOpacities} from "../render/flakture/board";
 
 const OPACITY_FADE_RATE = WILLPOWER_BID_OPACITY_MAX / WILLPOWER_BID_FADE_IN_S;
 

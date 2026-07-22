@@ -1,4 +1,4 @@
-import Flakture from "components/flakture";
+import Flakture from "./components/flakture";
 import { Side } from "./common-types";
 export declare const setupBoardHoverAndClick: (flakture: Flakture) => void;
 export declare const setupClickConfirm: (flakture: Flakture, button: Element) => void;

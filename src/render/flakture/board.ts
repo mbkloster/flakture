@@ -11,7 +11,7 @@ import {
     THICKNESS_HOVER,
     THICKNESS_SELECT,
     WILLPOWER_BID_INITIAL_PADDING
-} from "ctf-render-defines";
+} from "../../ctf-render-defines";
 import {
     BothSides,
     Coord,
@@ -22,11 +22,11 @@ import {
     PieceMove,
     Ruleset,
     Side
-} from "common-types";
-import Flakture from "components/flakture";
-import {opponentSide, redeployedPieceMap} from "utilities";
-import {flagEntryPoint, gameContextTurnText} from "utilities/render-utilities";
-import {inFlagZone} from "utilities/board-utilities";
+} from "../../common-types";
+import Flakture from "../../components/flakture";
+import {opponentSide, redeployedPieceMap} from "../../utilities";
+import {flagEntryPoint, gameContextTurnText} from "../../utilities/render-utilities";
+import {inFlagZone} from "../../utilities/board-utilities";
 
 // ==========================================================================
 function isLooseFlag(flagState: FlagState): flagState is LooseFlag {

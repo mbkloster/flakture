@@ -1,4 +1,4 @@
-import BaseAnimation from "animations/base-animation";
+import BaseAnimation from "./base-animation";
 import Flakture from "../components/flakture";
 import { Coord, Side } from "../common-types";
 export declare class WillpowerBidCollisionTravel extends BaseAnimation {

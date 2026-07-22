@@ -1,5 +1,5 @@
-import ApplicationComponent from "components/application-component";
-import {assembleCtfState, derivePieceCodex} from "ctf-state-assembly";
+import ApplicationComponent from "./application-component";
+import {assembleCtfState, derivePieceCodex} from "../ctf-state-assembly";
 import {
     BothSides, Coord,
     CtfGameMovement,
@@ -18,7 +18,7 @@ import {
     renderSelectedPiece, renderWillpowerBidOpacities, renderWillpowerBids,
     rerenderFlag,
     rerenderGameContextTurn, rerenderWillpowerBids
-} from "render/flakture/board";
+} from "../render/flakture/board";
 import {
     clearRenderedDestinations,
     clearDestinationsAndHideControls,
@@ -27,28 +27,27 @@ import {
     renderDistanceFill,
     renderDistanceLine,
     renderInitialControlBar,
-    sideSubmitButton,
     sideConfirmedIcon
-} from "render/flakture/control-bar";
-import {setupBoardHoverAndClick} from "event-handlers";
-import {RULESETS} from "ctf-defines";
-import {newTurn} from "factories";
-import {distanceCost, runTimeSlice, startGameMovement, stopGameMovement} from "ctf-state-transition";
-import {deriveDeadPieceCount, opponentSide, orderNumber, redeployLines} from "utilities";
-import {ConflictingInstructionsException, RuleViolationException} from "utilities/exceptions";
-import {destinationConflictPoints} from "utilities/render-utilities";
+} from "../render/flakture/control-bar";
+import {setupBoardHoverAndClick} from "../event-handlers";
+import {RULESETS} from "../ctf-defines";
+import {newTurn} from "../factories";
+import {distanceCost, runTimeSlice, startGameMovement, stopGameMovement} from "../ctf-state-transition";
+import {deriveDeadPieceCount, opponentSide, orderNumber, redeployLines} from "../utilities";
+import {ConflictingInstructionsException, RuleViolationException} from "../utilities/exceptions";
+import {destinationConflictPoints} from "../utilities/render-utilities";
 import {
     COLORS,
     EQUAL_BID_COLLISION_DELAY_S,
     PRE_KICKOFF_DELAY_S,
     WILLPOWER_BID_FADE_IN_S,
     WILLPOWER_BID_OPACITY_MAX
-} from "ctf-render-defines";
-import {WillpowerBidOpacityFade} from "animations/willpower-bid-opacity-fade";
-import {WillpowerBidCollisionTravel} from "animations/willpower-bid-collision-travel";
-import {WillpowerBidPlacementTravel} from "animations/willpower-bid-placement-travel";
-import {InlineText} from "animations/inline-text";
-import {Notification} from "animations/notification";
+} from "../ctf-render-defines";
+import {WillpowerBidOpacityFade} from "../animations/willpower-bid-opacity-fade";
+import {WillpowerBidCollisionTravel} from "../animations/willpower-bid-collision-travel";
+import {WillpowerBidPlacementTravel} from "../animations/willpower-bid-placement-travel";
+import {InlineText} from "../animations/inline-text";
+import {Notification} from "../animations/notification";
 
 type ComponentProperties = {
     controllingSides: Side[]

@@ -1,6 +1,6 @@
-import BaseAnimation from "animations/base-animation";
-import Flakture from "components/flakture";
-import {FONTS} from "ctf-render-defines";
+import BaseAnimation from "./base-animation";
+import Flakture from "../components/flakture";
+import {FONTS} from "../ctf-render-defines";
 
 export class InlineText extends BaseAnimation {
     elapsedS: number

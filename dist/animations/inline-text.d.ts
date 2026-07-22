@@ -1,5 +1,5 @@
-import BaseAnimation from "animations/base-animation";
-import Flakture from "components/flakture";
+import BaseAnimation from "./base-animation";
+import Flakture from "../components/flakture";
 export declare class InlineText extends BaseAnimation {
     elapsedS: number;
     elem: SVGTextElement;

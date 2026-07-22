@@ -1,77 +1,47 @@
-import ApplicationComponent from "components/application-component";
-import { assembleCtfState, derivePieceCodex } from "ctf-state-assembly";
+import ApplicationComponent from "./application-component";
+import { assembleCtfState, derivePieceCodex } from "../ctf-state-assembly";
 import { BothSides } from "../common-types";
-import { renderDestinations, renderHoveredPiece, renderInitialBoard, renderMovedPieces, renderRedeployedPieces, renderRedeployLine, renderRedeployPoint, renderSelectedPiece, renderWillpowerBidOpacities, renderWillpowerBids, rerenderFlag, rerenderGameContextTurn, rerenderWillpowerBids } from "render/flakture/board";
-import { clearRenderedDestinations, clearDestinationsAndHideControls, deriveDistanceFillProps, renderControlBar, renderDistanceFill, renderDistanceLine, renderInitialControlBar, sideConfirmedIcon } from "render/flakture/control-bar";
-import { setupBoardHoverAndClick } from "event-handlers";
-import { RULESETS } from "ctf-defines";
-import { newTurn } from "factories";
-import { distanceCost, runTimeSlice, startGameMovement, stopGameMovement } from "ctf-state-transition";
-import { deriveDeadPieceCount, opponentSide, orderNumber, redeployLines } from "utilities";
-import { ConflictingInstructionsException, RuleViolationException } from "utilities/exceptions";
-import { destinationConflictPoints } from "utilities/render-utilities";
-import { COLORS, EQUAL_BID_COLLISION_DELAY_S, PRE_KICKOFF_DELAY_S, WILLPOWER_BID_FADE_IN_S, WILLPOWER_BID_OPACITY_MAX } from "ctf-render-defines";
-import { WillpowerBidOpacityFade } from "animations/willpower-bid-opacity-fade";
-import { WillpowerBidCollisionTravel } from "animations/willpower-bid-collision-travel";
-import { WillpowerBidPlacementTravel } from "animations/willpower-bid-placement-travel";
-import { InlineText } from "animations/inline-text";
-import { Notification } from "animations/notification";
+import { renderDestinations, renderHoveredPiece, renderInitialBoard, renderMovedPieces, renderRedeployedPieces, renderRedeployLine, renderRedeployPoint, renderSelectedPiece, renderWillpowerBidOpacities, renderWillpowerBids, rerenderFlag, rerenderGameContextTurn, rerenderWillpowerBids } from "../render/flakture/board";
+import { clearRenderedDestinations, clearDestinationsAndHideControls, deriveDistanceFillProps, renderControlBar, renderDistanceFill, renderDistanceLine, renderInitialControlBar, sideConfirmedIcon } from "../render/flakture/control-bar";
+import { setupBoardHoverAndClick } from "../event-handlers";
+import { RULESETS } from "../ctf-defines";
+import { newTurn } from "../factories";
+import { distanceCost, runTimeSlice, startGameMovement, stopGameMovement } from "../ctf-state-transition";
+import { deriveDeadPieceCount, opponentSide, orderNumber, redeployLines } from "../utilities";
+import { ConflictingInstructionsException, RuleViolationException } from "../utilities/exceptions";
+import { destinationConflictPoints } from "../utilities/render-utilities";
+import { COLORS, EQUAL_BID_COLLISION_DELAY_S, PRE_KICKOFF_DELAY_S, WILLPOWER_BID_FADE_IN_S, WILLPOWER_BID_OPACITY_MAX } from "../ctf-render-defines";
+import { WillpowerBidOpacityFade } from "../animations/willpower-bid-opacity-fade";
+import { WillpowerBidCollisionTravel } from "../animations/willpower-bid-collision-travel";
+import { WillpowerBidPlacementTravel } from "../animations/willpower-bid-placement-travel";
+import { InlineText } from "../animations/inline-text";
+import { Notification } from "../animations/notification";
 export default class Flakture extends ApplicationComponent {
+    conflictPoints;
+    controllingSides;
+    elapseTimeAfter;
+    gameProperties;
+    gameMovement;
+    gameState;
+    hoveredPieceIndex;
+    imagePaths;
+    layers;
+    pieceCodex;
+    redeploying;
+    redeployedPieces;
+    redeployLines;
+    redeployPoint;
+    renderRatio;
+    ruleset;
+    selectedSide;
+    selectedPieceIndex;
+    svg;
+    timeTicker;
+    turns;
+    turnNumber;
     // ==========================================================================
     constructor(containingElem, props) {
         super(containingElem, props);
-        // ==========================================================================
-        this.kickstartIntoMotion = () => {
-            clearDestinationsAndHideControls(this);
-            this.gameMovement = startGameMovement(this.ruleset, this.gameState, this.currentTurn(), this.pieceCodex);
-            this.hoveredPieceIndex = null;
-            this.selectedPieceIndex = null;
-            if (this.controllingSides.length !== 1) {
-                this.selectedSide = null;
-            }
-            const placementTravelAnimation = new WillpowerBidPlacementTravel(this);
-            this.elapseTimeAfter = Date.now() + (placementTravelAnimation.durationS + PRE_KICKOFF_DELAY_S + WILLPOWER_BID_FADE_IN_S) * 1000;
-            this.addAnimation(new WillpowerBidOpacityFade(this, 0, WILLPOWER_BID_OPACITY_MAX));
-            setTimeout(() => {
-                this.addAnimation(placementTravelAnimation);
-            }, WILLPOWER_BID_FADE_IN_S * 1000);
-            rerenderWillpowerBids(this);
-            renderControlBar(this);
-            renderRedeployedPieces(this);
-            renderHoveredPiece(this);
-            renderSelectedPiece(this);
-            renderDestinations(this);
-        };
-        // ==========================================================================
-        this.popRedeployment = () => {
-            if (!this.selectedSide) {
-                throw new ConflictingInstructionsException("Cannot pop redeploy with no selectedSide");
-            }
-            let foundMatch = false;
-            for (let i = this.redeployedPieces.length - 1; i >= 0; i--) {
-                const redeployedPiece = this.redeployedPieces[i];
-                if (redeployedPiece.side === this.selectedSide) {
-                    this.redeployedPieces.splice(i, 1);
-                    const turn = this.currentTurn();
-                    delete turn.moves[this.selectedSide].redeployments[redeployedPiece.order];
-                    this.elem(`piece-g-${redeployedPiece.side}${redeployedPiece.order}`).setAttribute("opacity", "0");
-                    foundMatch = true;
-                    if (this.selectedPieceIndex && this.gameState.pieces[this.selectedPieceIndex].name === `${this.selectedSide}${redeployedPiece.order}`) {
-                        this.selectedPieceIndex = null;
-                        this.hoveredPieceIndex = null;
-                    }
-                    break;
-                }
-            }
-            if (!foundMatch) {
-                throw new ConflictingInstructionsException(`Side ${this.selectedSide} doesn't have redeployments`);
-            }
-            renderRedeployedPieces(this);
-            renderHoveredPiece(this);
-            renderSelectedPiece(this);
-            renderControlBar(this);
-            renderDestinations(this);
-        };
         containingElem.innerHTML = "";
         this.conflictPoints = [];
         this.controllingSides = props.controllingSides;
@@ -130,11 +100,10 @@ export default class Flakture extends ApplicationComponent {
     }
     // ==========================================================================
     confirmMove(willpowerBid) {
-        var _a;
         const turn = this.currentTurn();
         const side = this.selectedSide;
         turn.moves[side].willpowerBid = willpowerBid;
-        (_a = turn.moveSubmissionTimes)[side] || (_a[side] = Date.now());
+        turn.moveSubmissionTimes[side] ||= Date.now();
         this.elem(`control-bar-confirmer-${side}`).replaceChildren(sideConfirmedIcon(this, side));
         if (turn.moveSubmissionTimes.left && turn.moveSubmissionTimes.right) {
             this.kickstartIntoMotion();
@@ -142,7 +111,6 @@ export default class Flakture extends ApplicationComponent {
     }
     // ==========================================================================
     runTimeSlice(dSeconds) {
-        var _a, _b;
         super.runTimeSlice(dSeconds);
         const { ruleset } = this;
         if (Date.now() >= this.elapseTimeAfter) {
@@ -202,10 +170,10 @@ export default class Flakture extends ApplicationComponent {
                             this.addAnimation(new Notification(this, text, color, "#000", 1, 5, 5));
                         }
                         const oldTurn = this.turns[this.turnNumber];
-                        oldTurn.finishedAt || (oldTurn.finishedAt = Date.now());
+                        oldTurn.finishedAt ||= Date.now();
                         this.turnNumber++;
                         this.gameState = stopGameMovement(this.ruleset, this.gameState, this.gameMovement, oldTurn);
-                        (_a = this.turns)[_b = this.turnNumber] || (_a[_b] = newTurn(this.turnNumber, this.controllingSides));
+                        this.turns[this.turnNumber] ||= newTurn(this.turnNumber, this.controllingSides);
                         const event = new CustomEvent('newTurn', {
                             detail: {
                                 gameProperties: this.gameProperties,
@@ -241,7 +209,6 @@ export default class Flakture extends ApplicationComponent {
     }
     // ==========================================================================
     appendSelectedPieceDestination(coords) {
-        var _a;
         if (this.selectedPieceIndex === null) {
             return;
         }
@@ -256,7 +223,7 @@ export default class Flakture extends ApplicationComponent {
         else {
             this.elem(`speed-radio-0`).click();
         }
-        (_a = this.currentTurn().moves[selectedPiece.side].pieces)[order] || (_a[order] = { destinations: [], speed: 0 });
+        this.currentTurn().moves[selectedPiece.side].pieces[order] ||= { destinations: [], speed: 0 };
         this.currentTurn().moves[selectedPiece.side].pieces[order].destinations.push(coords);
         this.conflictPoints = destinationConflictPoints(this.gameProperties, this.gameState, this.currentTurn(), this.pieceCodex);
         renderDestinations(this);
@@ -309,6 +276,28 @@ export default class Flakture extends ApplicationComponent {
         return this.redeployedPieces.filter(redeployment => redeployment.side === this.selectedSide).length;
     }
     // ==========================================================================
+    kickstartIntoMotion = () => {
+        clearDestinationsAndHideControls(this);
+        this.gameMovement = startGameMovement(this.ruleset, this.gameState, this.currentTurn(), this.pieceCodex);
+        this.hoveredPieceIndex = null;
+        this.selectedPieceIndex = null;
+        if (this.controllingSides.length !== 1) {
+            this.selectedSide = null;
+        }
+        const placementTravelAnimation = new WillpowerBidPlacementTravel(this);
+        this.elapseTimeAfter = Date.now() + (placementTravelAnimation.durationS + PRE_KICKOFF_DELAY_S + WILLPOWER_BID_FADE_IN_S) * 1000;
+        this.addAnimation(new WillpowerBidOpacityFade(this, 0, WILLPOWER_BID_OPACITY_MAX));
+        setTimeout(() => {
+            this.addAnimation(placementTravelAnimation);
+        }, WILLPOWER_BID_FADE_IN_S * 1000);
+        rerenderWillpowerBids(this);
+        renderControlBar(this);
+        renderRedeployedPieces(this);
+        renderHoveredPiece(this);
+        renderSelectedPiece(this);
+        renderDestinations(this);
+    };
+    // ==========================================================================
     netRedeployableCount() {
         if (!this.selectedSide) {
             return 0;
@@ -316,6 +305,36 @@ export default class Flakture extends ApplicationComponent {
         const deadPieceCount = deriveDeadPieceCount(this.gameState.pieces, this.selectedSide);
         return deadPieceCount - this.redeployedCount();
     }
+    // ==========================================================================
+    popRedeployment = () => {
+        if (!this.selectedSide) {
+            throw new ConflictingInstructionsException("Cannot pop redeploy with no selectedSide");
+        }
+        let foundMatch = false;
+        for (let i = this.redeployedPieces.length - 1; i >= 0; i--) {
+            const redeployedPiece = this.redeployedPieces[i];
+            if (redeployedPiece.side === this.selectedSide) {
+                this.redeployedPieces.splice(i, 1);
+                const turn = this.currentTurn();
+                delete turn.moves[this.selectedSide].redeployments[redeployedPiece.order];
+                this.elem(`piece-g-${redeployedPiece.side}${redeployedPiece.order}`).setAttribute("opacity", "0");
+                foundMatch = true;
+                if (this.selectedPieceIndex && this.gameState.pieces[this.selectedPieceIndex].name === `${this.selectedSide}${redeployedPiece.order}`) {
+                    this.selectedPieceIndex = null;
+                    this.hoveredPieceIndex = null;
+                }
+                break;
+            }
+        }
+        if (!foundMatch) {
+            throw new ConflictingInstructionsException(`Side ${this.selectedSide} doesn't have redeployments`);
+        }
+        renderRedeployedPieces(this);
+        renderHoveredPiece(this);
+        renderSelectedPiece(this);
+        renderControlBar(this);
+        renderDestinations(this);
+    };
     // ==========================================================================
     removeDestination() {
         if (this.selectedPieceIndex === null) {
@@ -415,7 +434,6 @@ export default class Flakture extends ApplicationComponent {
     }
     // ==========================================================================
     setTurnMove(side, move, submitted) {
-        var _a;
         const turn = this.currentTurn();
         turn.moves[side] = move;
         const cost = distanceCost(this.ruleset, this.gameState, turn.moves, this.pieceCodex);
@@ -423,7 +441,7 @@ export default class Flakture extends ApplicationComponent {
             throw new RuleViolationException("tooMuchDistance");
         }
         if (submitted) {
-            (_a = turn.moveSubmissionTimes)[side] || (_a[side] = Date.now());
+            turn.moveSubmissionTimes[side] ||= Date.now();
             renderControlBar(this);
         }
         if (turn.moveSubmissionTimes.left && turn.moveSubmissionTimes.right) {

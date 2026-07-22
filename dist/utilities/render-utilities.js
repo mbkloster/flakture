@@ -1,6 +1,6 @@
-import { BothSides, Side } from "common-types";
-import { ordinalSuffix } from "utilities/number-utilities";
-import { closestOnLineToPoint, firstCollisionPointOnLine, opponentSide } from "utilities";
+import { BothSides, Side } from "../common-types";
+import { ordinalSuffix } from "./number-utilities";
+import { closestOnLineToPoint, firstCollisionPointOnLine, opponentSide } from "../utilities";
 import { RULESETS } from "../ctf-defines";
 import { circlesCollide } from "./board-utilities";
 // ==========================================================================

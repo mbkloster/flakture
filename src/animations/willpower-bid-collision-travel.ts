@@ -1,8 +1,8 @@
-import BaseAnimation from "animations/base-animation";
+import BaseAnimation from "./base-animation";
 import {
     WILLPOWER_BID_MARGIN_MIN,
     WILLPOWER_BID_PADDING, WILLPOWER_BID_TRAVEL_PER_S
-} from "ctf-render-defines";
+} from "../ctf-render-defines";
 import Flakture from "../components/flakture";
 import {BothSides, Coord, Side} from "../common-types";
 import {WillpowerDeduction} from "./willpower-deduction";

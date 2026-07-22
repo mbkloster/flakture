@@ -36,7 +36,6 @@ export const piecesCollide = (ruleset, pieceA, pieceB) => {
 };
 // ==========================================================================
 export const runTimeSlice = (ruleset, ctfGameState, movement, pieceCodex) => {
-    var _a, _b;
     let stillInMotion = false;
     const stillMovingPieces = new Set();
     const result = { collisions: [], willpowerUsed: new Set() };
@@ -135,7 +134,7 @@ export const runTimeSlice = (ruleset, ctfGameState, movement, pieceCodex) => {
                     if (movement.flags[opponentSide(winner)] === leftPieceIndex) {
                         flagCarriers++;
                     }
-                    (_a = movement.pieces)[rightPieceIndex] || (_a[rightPieceIndex] = { direction: ctfGameState.pieces[rightPieceIndex].direction, x: pieceB.x, y: pieceB.y, dead: false, speed: 0, opacity: 1, destinations: [] });
+                    movement.pieces[rightPieceIndex] ||= { direction: ctfGameState.pieces[rightPieceIndex].direction, x: pieceB.x, y: pieceB.y, dead: false, speed: 0, opacity: 1, destinations: [] };
                     movement.pieces[rightPieceIndex].dead = true;
                     if (!movement.willpowerUsed.has(Side.left)) {
                         result.willpowerUsed.add(Side.left);
@@ -151,7 +150,7 @@ export const runTimeSlice = (ruleset, ctfGameState, movement, pieceCodex) => {
                     if (movement.flags[opponentSide(winner)] === rightPieceIndex) {
                         flagCarriers++;
                     }
-                    (_b = movement.pieces)[leftPieceIndex] || (_b[leftPieceIndex] = { direction: ctfGameState.pieces[leftPieceIndex].direction, x: pieceA.x, y: pieceA.y, dead: false, speed: 0, opacity: 1, destinations: [] });
+                    movement.pieces[leftPieceIndex] ||= { direction: ctfGameState.pieces[leftPieceIndex].direction, x: pieceA.x, y: pieceA.y, dead: false, speed: 0, opacity: 1, destinations: [] };
                     movement.pieces[leftPieceIndex].dead = true;
                     if (!movement.willpowerUsed.has(Side.right)) {
                         result.willpowerUsed.add(Side.right);

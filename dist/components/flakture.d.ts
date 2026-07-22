@@ -1,4 +1,4 @@
-import ApplicationComponent from "components/application-component";
+import ApplicationComponent from "./application-component";
 import { Coord, CtfGameMovement, CtfGameProperties, CtfGameState, Formation, Line, PieceCodex, Ruleset, Side, SideMove, Turn } from "../common-types";
 type ComponentProperties = {
     controllingSides: Side[];

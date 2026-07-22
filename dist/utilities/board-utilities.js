@@ -1,4 +1,4 @@
-import { Side } from "common-types";
+import { Side } from "../common-types";
 // ==========================================================================
 export const circlesCollide = (circleA, radiusA, circleB, radiusB, debug) => {
     if (circleA.x < circleB.x - radiusA - radiusB || circleA.x > circleB.x + radiusA + radiusB) {

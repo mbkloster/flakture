@@ -1,4 +1,4 @@
-import { Ruleset, Side } from "common-types";
+import { Ruleset, Side } from "../common-types";
 export declare const circlesCollide: (circleA: {
     x: number;
     y: number;

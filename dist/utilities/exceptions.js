@@ -8,24 +8,28 @@ class CustomError extends Error {
     }
 }
 export class ConflictingInstructionsException extends CustomError {
+    message;
     constructor(message) {
         super(message);
         this.message = message;
     }
 }
 export class AmbiguousElementException extends CustomError {
+    className;
     constructor(message) {
         super(message);
         this.className = message;
     }
 }
 export class MissingElementException extends CustomError {
+    className;
     constructor(message) {
         super(message);
         this.className = message;
     }
 }
 export class RuleViolationException extends CustomError {
+    rule;
     constructor(rule) {
         super(rule);
         this.rule = rule;

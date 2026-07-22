@@ -1,5 +1,5 @@
-import BaseAnimation from "animations/base-animation";
-import Flakture from "components/flakture";
+import BaseAnimation from "./base-animation";
+import Flakture from "../components/flakture";
 import { Coord, Side } from "../common-types";
 export declare class WillpowerBidPlacementTravel extends BaseAnimation {
     elapsed: number;

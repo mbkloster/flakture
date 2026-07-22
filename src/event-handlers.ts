@@ -1,9 +1,9 @@
-import Flakture from "components/flakture";
-import {distSqFromPoint} from "utilities/board-utilities";
+import Flakture from "./components/flakture";
+import {distSqFromPoint} from "./utilities/board-utilities";
 import {Side} from "./common-types";
-import {renderControlBar} from "render/flakture/control-bar";
-import {renderRedeployPoint} from "render/flakture/board"
-import {redeployedPieceMap} from "utilities";
+import {renderControlBar} from "./render/flakture/control-bar";
+import {renderRedeployPoint} from "./render/flakture/board"
+import {redeployedPieceMap} from "./utilities";
 import {renderWillpowerBidPopup} from "./render/flakture/willpower-bid-popup";
 
 // ==========================================================================

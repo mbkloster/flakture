@@ -1,7 +1,13 @@
-import BaseAnimation from "animations/base-animation";
+import BaseAnimation from "./base-animation";
 import { BothSides, Side } from "../common-types";
 import { WILLPOWER_BID_PADDING, WILLPOWER_BID_TRAVEL_PER_S } from "../ctf-render-defines";
 export class WillpowerBidPlacementTravel extends BaseAnimation {
+    elapsed;
+    elems;
+    flakture;
+    positions;
+    durationS;
+    travelPerS;
     // ==========================================================================
     constructor(flakture) {
         super();

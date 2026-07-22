@@ -1,16 +1,16 @@
 import {
     BothSides,
     Side
-} from "common-types";
+} from "../../common-types";
 import {
     setupClickConfirm, setupClickRedeploy,
     setupClickSpeedChange, setupClickUndoRedeploy,
     setupSelectedSideClick,
     setupUndo,
-} from "event-handlers";
-import {distanceCost} from "ctf-state-transition";
-import Flakture from "components/flakture";
-import {deriveDeadPieceCount, opponentSide} from "utilities";
+} from "../../event-handlers";
+import {distanceCost} from "../../ctf-state-transition";
+import Flakture from "../../components/flakture";
+import {deriveDeadPieceCount, opponentSide} from "../../utilities";
 
 type DistanceBarProps = Record<Side, {
     currentFill: number,

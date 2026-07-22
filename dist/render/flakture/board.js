@@ -1,8 +1,8 @@
-import { COLORS, CONFLICT_POINT_RADIUS, FLAG_DISPLAY_H, FLAG_DISPLAY_W, FLAG_ENTRY_WIDTH, FONTS, GAME_CONTEXT_FRONT_OPACITY, HALO_BUFFER, REDEPLOY_OPACITY, REDEPLOY_POINT_RADIUS, THICKNESS_HOVER, THICKNESS_SELECT, WILLPOWER_BID_INITIAL_PADDING } from "ctf-render-defines";
-import { BothSides, Side } from "common-types";
-import { opponentSide, redeployedPieceMap } from "utilities";
-import { flagEntryPoint, gameContextTurnText } from "utilities/render-utilities";
-import { inFlagZone } from "utilities/board-utilities";
+import { COLORS, CONFLICT_POINT_RADIUS, FLAG_DISPLAY_H, FLAG_DISPLAY_W, FLAG_ENTRY_WIDTH, FONTS, GAME_CONTEXT_FRONT_OPACITY, HALO_BUFFER, REDEPLOY_OPACITY, REDEPLOY_POINT_RADIUS, THICKNESS_HOVER, THICKNESS_SELECT, WILLPOWER_BID_INITIAL_PADDING } from "../../ctf-render-defines";
+import { BothSides, Side } from "../../common-types";
+import { opponentSide, redeployedPieceMap } from "../../utilities";
+import { flagEntryPoint, gameContextTurnText } from "../../utilities/render-utilities";
+import { inFlagZone } from "../../utilities/board-utilities";
 // ==========================================================================
 function isLooseFlag(flagState) {
     if (!flagState) {

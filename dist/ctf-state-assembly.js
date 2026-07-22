@@ -1,5 +1,5 @@
 import { Side } from "./common-types";
-import { distributeValuesIntoSlots } from "utilities/data-utilities";
+import { distributeValuesIntoSlots } from "./utilities/data-utilities";
 // ==========================================================================
 export const assembleCtfState = (ruleset, formations) => {
     const pieces = [];

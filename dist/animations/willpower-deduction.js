@@ -1,6 +1,11 @@
-import BaseAnimation from "animations/base-animation";
-import { WILLPOWER_DEDUCTION_PER_S } from "ctf-render-defines";
+import BaseAnimation from "./base-animation";
+import { WILLPOWER_DEDUCTION_PER_S } from "../ctf-render-defines";
 export class WillpowerDeduction extends BaseAnimation {
+    currentValue;
+    deductionCounterS;
+    elem;
+    flakture;
+    targetValue;
     // ==========================================================================
     constructor(flakture, side, deduction) {
         super();

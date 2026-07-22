@@ -1,4 +1,7 @@
 export default class BaseAnimation {
+    animations;
+    afterComplete;
+    done;
     // ==========================================================================
     constructor() {
         this.animations = [];

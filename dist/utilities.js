@@ -88,7 +88,7 @@ const addRedeployLines = (ruleset, lines, startX, y, potentialBlockers) => {
             }
         }
         if (!conflictFound) {
-            lineStart || (lineStart = tick);
+            lineStart ||= tick;
         }
         if (i >= ruleset.REDEPLOY_TICK_COUNT - 1 && lineStart) {
             // If we're at the end, try to fill out the start to whatever is left

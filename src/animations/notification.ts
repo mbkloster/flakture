@@ -1,4 +1,4 @@
-import BaseAnimation from "animations/base-animation";
+import BaseAnimation from "./base-animation";
 import {
     FONTS,
 } from "../ctf-render-defines";

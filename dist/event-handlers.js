@@ -1,7 +1,7 @@
-import { distSqFromPoint } from "utilities/board-utilities";
-import { renderControlBar } from "render/flakture/control-bar";
-import { renderRedeployPoint } from "render/flakture/board";
-import { redeployedPieceMap } from "utilities";
+import { distSqFromPoint } from "./utilities/board-utilities";
+import { renderControlBar } from "./render/flakture/control-bar";
+import { renderRedeployPoint } from "./render/flakture/board";
+import { redeployedPieceMap } from "./utilities";
 import { renderWillpowerBidPopup } from "./render/flakture/willpower-bid-popup";
 // ==========================================================================
 export const setupBoardHoverAndClick = (flakture) => {

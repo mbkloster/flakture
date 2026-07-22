@@ -1,5 +1,5 @@
-import { Side } from "common-types";
-import Flakture from "components/flakture";
+import { Side } from "../../common-types";
+import Flakture from "../../components/flakture";
 export declare const renderDestinations: (flakture: Flakture) => void;
 export declare const renderHoveredPiece: (flakture: Flakture) => void;
 export declare const renderInitialBoard: (flakture: Flakture) => void;

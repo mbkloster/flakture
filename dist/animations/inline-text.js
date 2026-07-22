@@ -1,6 +1,12 @@
-import BaseAnimation from "animations/base-animation";
-import { FONTS } from "ctf-render-defines";
+import BaseAnimation from "./base-animation";
+import { FONTS } from "../ctf-render-defines";
 export class InlineText extends BaseAnimation {
+    elapsedS;
+    elem;
+    fadeInS;
+    fadeS;
+    flakture;
+    maxOpacityS;
     // ==========================================================================
     constructor(flakture, text, color, outlineColor, centerX, centerY, fadeInS, maxOpacityS, fadeS) {
         super();

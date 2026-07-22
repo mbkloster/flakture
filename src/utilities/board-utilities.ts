@@ -1,4 +1,4 @@
-import {Ruleset, Side} from "common-types";
+import {Ruleset, Side} from "../common-types";
 
 // ==========================================================================
 export const circlesCollide = (circleA: {x: number, y: number}, radiusA: number, circleB: {x: number, y: number}, radiusB: number, debug?: boolean) => {

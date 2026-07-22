@@ -1,4 +1,4 @@
-import { Coord, CtfGameProperties, CtfGameState, PieceCodex, Ruleset, Side, Turn } from "common-types";
+import { Coord, CtfGameProperties, CtfGameState, PieceCodex, Ruleset, Side, Turn } from "../common-types";
 export declare const deriveRenderRatio: (desiredW: number, desiredH: number, additionalW: number, additionalH: number) => number;
 export declare const destinationConflictPoints: (gameProperties: CtfGameProperties, gameState: CtfGameState, turn: Turn, pieceCodex: PieceCodex) => {
     x: number;
