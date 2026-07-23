@@ -1,6 +1,8 @@
 import { BothSides, Side, } from "./common-types";
 import { opponentSide } from "./utilities";
 import { circlesCollide, inFlagZone } from "./utilities/board-utilities";
+import { RULESETS } from "./ctf-defines";
+import { derivePieceCodex } from "./ctf-state-assembly";
 function isLooseFlag(flagState) {
     if (!flagState) {
         return false;
@@ -29,6 +31,16 @@ export const distanceCost = (ruleset, ctfGameState, moves, pieceCodex) => {
         });
     });
     return distances;
+};
+// ==========================================================================
+export const gameWithTurnApplied = (gameProperties, ctfGameState, turn, pieceCodex) => {
+    const ruleset = RULESETS[gameProperties.rulesetName];
+    pieceCodex ||= derivePieceCodex(ctfGameState.pieces);
+    const movement = startGameMovement(ruleset, ctfGameState, turn, pieceCodex);
+    for (let i = 0; movement.stillMovingPieces.size && i < 1000; i++) {
+        runTimeSlice(ruleset, ctfGameState, movement, pieceCodex);
+    }
+    return stopGameMovement(ruleset, ctfGameState, movement, turn);
 };
 // ==========================================================================
 export const piecesCollide = (ruleset, pieceA, pieceB) => {

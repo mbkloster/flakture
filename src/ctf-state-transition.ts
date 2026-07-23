@@ -1,7 +1,7 @@
 import {
     BothSides,
     Coord,
-    CtfGameMovement,
+    CtfGameMovement, CtfGameProperties,
     CtfGameState,
     FlagState, LooseFlag,
     PieceCodex,
@@ -11,6 +11,8 @@ import {
 } from "./common-types";
 import {opponentSide} from "./utilities";
 import {circlesCollide, inFlagZone} from "./utilities/board-utilities";
+import {RULESETS} from "./ctf-defines";
+import {derivePieceCodex} from "./ctf-state-assembly";
 
 function isLooseFlag(flagState: FlagState): flagState is LooseFlag {
     if (!flagState) { return false; }
@@ -41,6 +43,17 @@ export const distanceCost = (ruleset: Ruleset, ctfGameState: CtfGameState, moves
         });
     });
     return distances;
+}
+
+// ==========================================================================
+export const gameWithTurnApplied = (gameProperties: CtfGameProperties, ctfGameState: CtfGameState, turn: Turn, pieceCodex?: PieceCodex): CtfGameState => {
+    const ruleset = RULESETS[gameProperties.rulesetName];
+    pieceCodex ||= derivePieceCodex(ctfGameState.pieces);
+    const movement = startGameMovement(ruleset, ctfGameState, turn, pieceCodex);
+    for (let i = 0; movement.stillMovingPieces.size && i < 1000; i++) {
+        runTimeSlice(ruleset, ctfGameState, movement, pieceCodex);
+    }
+    return stopGameMovement(ruleset, ctfGameState, movement, turn);
 }
 
 // ==========================================================================
