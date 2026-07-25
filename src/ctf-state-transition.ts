@@ -13,6 +13,7 @@ import {opponentSide} from "./utilities";
 import {circlesCollide, inFlagZone} from "./utilities/board-utilities";
 import {RULESETS} from "./ctf-defines";
 import {derivePieceCodex} from "./ctf-state-assembly";
+import {deepClone} from "./utilities/data-utilities";
 
 function isLooseFlag(flagState: FlagState): flagState is LooseFlag {
     if (!flagState) { return false; }
@@ -235,13 +236,13 @@ export const startGameMovement = (ruleset: Ruleset, ctfGameState: CtfGameState, 
             const pieceIndex = pieceCodex.name[`${ side }${ orderNumber }`]!
             const piece = ctfGameState.pieces[pieceIndex];
             if (gameMovement.pieces[pieceIndex]) {
-                gameMovement.pieces[pieceIndex].destinations = move.destinations;
+                gameMovement.pieces[pieceIndex].destinations = deepClone(move.destinations);
                 gameMovement.pieces[pieceIndex].speed = move.speed;
             } else {
                 gameMovement.pieces[pieceIndex] = {
                     direction: move.destinations[0].x > piece.x ? "r" : "l",
                     dead: false,
-                    destinations: move.destinations,
+                    destinations: deepClone(move.destinations),
                     opacity: 1,
                     speed: move.speed,
                     x: piece.x,
