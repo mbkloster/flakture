@@ -35,6 +35,7 @@ export const distanceCost = (ruleset, ctfGameState, moves, pieceCodex) => {
 };
 // ==========================================================================
 export const gameWithTurnApplied = (gameProperties, ctfGameState, turn, pieceCodex) => {
+    ctfGameState = deepClone(ctfGameState);
     const ruleset = RULESETS[gameProperties.rulesetName];
     pieceCodex ||= derivePieceCodex(ctfGameState.pieces);
     const movement = startGameMovement(ruleset, ctfGameState, turn, pieceCodex);
