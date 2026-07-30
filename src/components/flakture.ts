@@ -328,6 +328,7 @@ export default class Flakture extends ApplicationComponent {
 
     // ==========================================================================
     kickstartIntoMotion = () => {
+        this.conflictPoints = [];
         clearDestinationsAndHideControls(this);
         this.gameMovement = startGameMovement(this.ruleset, this.gameState, this.currentTurn(), this.pieceCodex);
         this.hoveredPieceIndex = null;

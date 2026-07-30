@@ -64,17 +64,17 @@ export const renderDestinations = (flakture) => {
             const movementPiece = movementPieces ? movementPieces[pieceIndex] : null;
             if (movementPiece) {
                 if (!movementPiece.dead) {
-                    renderDestinationForPiece(flakture, pieceIndex, movementPiece, move);
+                    renderDestinationForPiece(flakture, pieceIndex, movementPiece, movementPiece.destinations);
                 }
             }
             else if (piece.dead) {
                 const redeployedPiece = redeployedPieceMap(flakture)[piece.name];
                 if (redeployedPiece) {
-                    renderDestinationForPiece(flakture, pieceIndex, redeployedPiece, move);
+                    renderDestinationForPiece(flakture, pieceIndex, redeployedPiece, move.destinations);
                 }
             }
             else {
-                renderDestinationForPiece(flakture, pieceIndex, piece, move);
+                renderDestinationForPiece(flakture, pieceIndex, piece, move.destinations);
             }
         });
     });
@@ -114,12 +114,12 @@ export const renderDestinations = (flakture) => {
 };
 // ==========================================================================
 // Used in two places so that we can render both standard and redeployed pieces
-const renderDestinationForPiece = (flakture, pieceIndex, pieceStart, move) => {
+const renderDestinationForPiece = (flakture, pieceIndex, pieceStart, destPoints) => {
     let previousPoint = pieceStart;
     const { renderRatio } = flakture;
     let enteredFlagArea = false;
     const side = flakture.gameState.pieces[pieceIndex].side;
-    move.destinations.forEach(destPoint => {
+    destPoints.forEach(destPoint => {
         flakture.ensureElem(`dest-line dest-${pieceIndex} dest-${pieceIndex}-${destPoint.x}-${destPoint.y}`, 'line', {
             appendTo: flakture.svg,
             attributes: {
