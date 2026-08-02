@@ -98,6 +98,14 @@ export const renderWillpowerBidPopup = (flakture: Flakture)=> {
     flakture.createElem("button", {
         appendTo: controlsElem,
         attributes: {"class": "willpower-bid-popup-form-cancel", "type": "button"},
-        children: ["Cancel"]
+        children: ["Cancel"],
+        eventHandlers: {
+            click: event => {
+                event.preventDefault();
+                flakture.ensureElemRemoved("willpower-bid-popup"); // Bye bye
+                // So that stale input elem doesn't persist:
+                flakture.ensureElemRemoved("willpower-bid-popup-form-input");
+            }
+        }
     });
 }
