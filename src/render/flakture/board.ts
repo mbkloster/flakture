@@ -76,7 +76,7 @@ export const renderDestinations = (flakture: Flakture) => {
     flakture.ensureElemRemoved("dest-line");
     flakture.ensureElemRemoved("dest-flag-entry");
     let sidesToShow: Side[] = [];
-    if (flakture.currentTurn().moveSubmissionTimes.left && flakture.currentTurn().moveSubmissionTimes.right) {
+    if (flakture.sidesConfirmed().length >= 2) {
         sidesToShow = BothSides;
     } else if (flakture.selectedSide) {
         sidesToShow = [flakture.selectedSide];

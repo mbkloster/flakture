@@ -91,6 +91,7 @@ export const renderWillpowerBidPopup = (flakture) => {
         children: ["Cancel"],
         eventHandlers: {
             click: event => {
+                event.preventDefault();
                 flakture.ensureElemRemoved("willpower-bid-popup"); // Bye bye
                 // So that stale input elem doesn't persist:
                 flakture.ensureElemRemoved("willpower-bid-popup-form-input");

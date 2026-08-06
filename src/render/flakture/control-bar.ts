@@ -58,7 +58,7 @@ export const deriveDistanceFillProps = (flakture: Flakture): DistanceBarProps =>
     const distCost = distanceCost(ruleset, flakture.gameState,
             flakture.currentTurn().moves, flakture.pieceCodex);
     BothSides.forEach(side => {
-        const sideCost = flakture.selectedSide === side ? distCost[side] : 0;
+        const sideCost = (flakture.selectedSide === side || flakture.sidesConfirmed().length >= 2) ? distCost[side] : 0;
         result[side].currentFill = 100 * flakture.gameState.distance[side] / ruleset.DISTANCE_MAX;
         let distBonus = 0;
         if (flakture.currentTurn().turnNumber === 1) {

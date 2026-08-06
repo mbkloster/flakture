@@ -38,6 +38,7 @@ export default class Flakture extends ApplicationComponent {
     turns: Record<number, Turn>;
     turnNumber: number;
     constructor(containingElem: Element, props: ComponentProperties);
+    sidesConfirmed(): Side[];
     confirmMove(willpowerBid: number): void;
     runTimeSlice(dSeconds: number): void;
     appendSelectedPieceDestination(coords: {

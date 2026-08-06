@@ -148,13 +148,19 @@ export default class Flakture extends ApplicationComponent {
     }
 
     // ==========================================================================
+    sidesConfirmed() {
+        const turn = this.currentTurn();
+        return BothSides.filter(side => turn.moveSubmissionTimes[side]);
+    }
+
+    // ==========================================================================
     confirmMove(willpowerBid: number) {
         const turn = this.currentTurn();
         const side = this.selectedSide!;
         turn.moves[side]!.willpowerBid = willpowerBid;
         turn.moveSubmissionTimes[side] ||= Date.now();
         this.elem(`control-bar-confirmer-${side}`).replaceChildren(sideConfirmedIcon(this, side));
-        if (turn.moveSubmissionTimes.left && turn.moveSubmissionTimes.right) {
+        if (this.sidesConfirmed().length >= 2) {
             this.kickstartIntoMotion();
         }
     }
@@ -495,7 +501,7 @@ export default class Flakture extends ApplicationComponent {
             turn.moveSubmissionTimes[side] ||= Date.now();
             renderControlBar(this);
         }
-        if (turn.moveSubmissionTimes.left && turn.moveSubmissionTimes.right) {
+        if (this.sidesConfirmed().length >= 2) {
             this.kickstartIntoMotion();
         }
     }

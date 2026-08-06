@@ -37,7 +37,7 @@ export const deriveDistanceFillProps = (flakture) => {
     };
     const distCost = distanceCost(ruleset, flakture.gameState, flakture.currentTurn().moves, flakture.pieceCodex);
     BothSides.forEach(side => {
-        const sideCost = flakture.selectedSide === side ? distCost[side] : 0;
+        const sideCost = (flakture.selectedSide === side || flakture.sidesConfirmed().length >= 2) ? distCost[side] : 0;
         result[side].currentFill = 100 * flakture.gameState.distance[side] / ruleset.DISTANCE_MAX;
         let distBonus = 0;
         if (flakture.currentTurn().turnNumber === 1) {
@@ -136,6 +136,8 @@ export const renderDistanceFill = (flakture, distFillProps, side) => {
 export const renderDistanceLine = (flakture, distFillProps, side) => {
     const lineElem = flakture.elem(`control-bar-distance-box-line-${side}`);
     const diamondElem = flakture.elem(`control-bar-distance-box-diamond-${side}`);
+    const textElem = flakture.elem(`control-bar-distance-box-text-${side}`);
+    textElem.innerHTML = `${Math.round(distFillProps[side].fillAfterDistance)}%`;
     diamondElem.setAttribute("style", `left: ${distFillProps[side].fillAfterDistanceAndRefresh}%;`);
     if (distFillProps[side].currentFill === distFillProps[side].fillAfterDistance) {
         lineElem.classList.add('is-invisible');
@@ -202,7 +204,11 @@ export const renderInitialControlBar = (flakture) => {
                                 attributes: { "class": `control-bar-distance-box-line control-bar-distance-box-line-${side} ${distFillProps[side].currentFill !== distFillProps[side].fillAfterDistance ? "" : "is-invisible"}`, style: `left: ${distFillProps[side].fillAfterDistance}%;` }
                             }),
                             flakture.createElem("i", {
-                                attributes: { "class": `control-bar-distance-box-diamond control-bar-distance-box-diamond-${side} fa-solid fa-diamond`, style: `left: ${distFillProps[side].fillAfterDistanceAndRefresh}%;` }
+                                attributes: { "class": `control-bar-distance-box-diamond control-bar-distance-box-diamond-${side} is-${flakture.gameProperties.colors[side]} fa-solid fa-diamond`, style: `left: ${distFillProps[side].fillAfterDistanceAndRefresh}%;` }
+                            }),
+                            flakture.createElem("span", {
+                                attributes: { "class": `control-bar-distance-box-text control-bar-distance-box-text-${side}` },
+                                children: [`${Math.round(distFillProps[side].fillAfterDistance)}%`]
                             }),
                         ]
                     })
