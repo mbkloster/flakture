@@ -5,14 +5,27 @@
     <title>Flakture</title>
     <link rel="stylesheet" type="text/css" href="css/flakture.css" />
     <script src="js/flakture.js" type="module"></script>
-    <!--Include some Font Awesome build here-->
+    <!--A working JS Font Awesome build:-->
+    <script src="js/fa.js" type="module"></script>
 </head>
 <body class="flakture-body">
     <div class="flakture-game" id="flakture">
         {
           "controllingSides": [
-            "left"
+            "left", "right"
           ],
+          "imagePaths": {
+            "grass": "img/grass.svg",
+            "piece": "img/piece.svg",
+            "shirt-blue": "img/shirt-blue.svg",
+            "shirt-red": "img/shirt-red.svg",
+            "eyes-l": "img/eyes-l.svg",
+            "eyes-r": "img/eyes-r.svg",
+            "flag-blue-left": "img/flag-blue-left.svg",
+            "flag-blue-right": "img/flag-blue-right.svg",
+            "flag-red-left": "img/flag-red-left.svg",
+            "flag-red-right": "img/flag-red-right.svg"
+          },
           "formations": {
             "left": {
               "0": {
@@ -190,12 +203,10 @@
           "initialTurnNumber": 1,
           "gameProperties": {
             "names": {
-              "left": "Xavier",
-              "right": "Computer"
+              "left": "Loofah",
+              "right": "Rufus"
             },
-            "aiAssignments": {
-              "right": "0"
-            },
+            "aiAssignments": {},
             "colors": {
               "left": "blue",
               "right": "red"

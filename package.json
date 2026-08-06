@@ -47,7 +47,8 @@
   "scripts": {
     "test": "jest",
     "build": "tsc -p tsconfig.build.json",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "watch": "bun build ./entry/flakture.js --outdir ./example/js --target=browser --sourcemap=inline --splitting --watch --no-clear-screen"
   },
   "type": "module"
 }
