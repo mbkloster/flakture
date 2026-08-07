@@ -172,7 +172,7 @@ export default class Flakture extends ApplicationComponent {
                             else {
                                 text = `${this.gameProperties.names[this.gameMovement.winner]} wins!`;
                             }
-                            this.addAnimation(new Notification(this, text, color, "#000", 1, 5, 5));
+                            this.addAnimation(new Notification(this, text, color, COLORS.notificationOutline.neutral, 1, 5, 5));
                         }
                         const oldTurn = this.turns[this.turnNumber];
                         oldTurn.finishedAt ||= Date.now();
@@ -219,7 +219,8 @@ export default class Flakture extends ApplicationComponent {
         }
         const selectedPiece = this.gameState.pieces[this.selectedPieceIndex];
         const order = orderNumber(selectedPiece);
-        const existingSpeed = this.currentTurn().moves[selectedPiece.side]?.pieces[order]?.speed;
+        const turn = this.currentTurn();
+        const existingSpeed = turn.moves[selectedPiece.side]?.pieces[order]?.speed;
         this.elem("control-bar-speed").classList.remove("is-hidden");
         this.elem("control-bar-adjust").classList.remove("is-hidden");
         if (existingSpeed !== undefined) {
@@ -228,11 +229,18 @@ export default class Flakture extends ApplicationComponent {
         else {
             this.elem(`speed-radio-0`).click();
         }
-        this.currentTurn().moves[selectedPiece.side].pieces[order] ||= { destinations: [], speed: 0 };
-        this.currentTurn().moves[selectedPiece.side].pieces[order].destinations.push(coords);
-        this.conflictPoints = destinationConflictPoints(this.gameProperties, this.gameState, this.currentTurn(), this.pieceCodex);
-        renderDestinations(this);
-        renderControlBar(this);
+        turn.moves[selectedPiece.side].pieces[order] ||= { destinations: [], speed: 0 };
+        turn.moves[selectedPiece.side].pieces[order].destinations.push(coords);
+        const cost = distanceCost(this.ruleset, this.gameState, turn.moves, this.pieceCodex);
+        if (cost[selectedPiece.side] > this.gameState.distance[selectedPiece.side]) {
+            this.addAnimation(new Notification(this, "Can't go that far!", COLORS.notification.neutral, COLORS.notificationOutline.neutral, 0.1, 1, 1.15));
+            turn.moves[selectedPiece.side].pieces[order].destinations.pop();
+        }
+        else {
+            this.conflictPoints = destinationConflictPoints(this.gameProperties, this.gameState, turn, this.pieceCodex);
+            renderDestinations(this);
+            renderControlBar(this);
+        }
     }
     // ==========================================================================
     currentTurn() {

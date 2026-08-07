@@ -31,6 +31,10 @@ export declare const COLORS: {
     notification: {
         blue: string;
         red: string;
+        neutral: string;
+    };
+    notificationOutline: {
+        neutral: string;
     };
     pieces: {
         blue: string;

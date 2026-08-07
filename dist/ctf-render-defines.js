@@ -31,7 +31,11 @@ export const COLORS = {
     middleLine: "#808080",
     notification: {
         [PlayerColor.blue]: "#4040ff",
-        [PlayerColor.red]: "#ff4040"
+        [PlayerColor.red]: "#ff4040",
+        neutral: "#e9e9e9"
+    },
+    notificationOutline: {
+        neutral: "#e9e9e9"
     },
     pieces: {
         [PlayerColor.blue]: "#00f",
