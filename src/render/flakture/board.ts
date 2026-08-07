@@ -148,7 +148,9 @@ const renderDestinationForPiece = (flakture: Flakture, pieceIndex: number, piece
     let totalDistThresholdRemaining = ruleset.PIECE_DIST_HIGH_COST_THRESHOLD;
     destPoints.forEach(destPoint => {
         let distTraveled = Math.sqrt(Math.pow(destPoint.y - previousPoint.y, 2) + Math.pow(destPoint.x - previousPoint.x, 2));
-        const distBelowThreshold = Math.max(0, Math.min(distTraveled, totalDistThresholdRemaining));
+        const distBelowThreshold = flakture.gameMovement
+            ? distTraveled // If the game is in motion, we don't make any attempt to show what's "past threshold"
+            : Math.max(0, Math.min(distTraveled, totalDistThresholdRemaining));
         const distPastThreshold = distTraveled - distBelowThreshold;
         const angle = Math.atan2(destPoint.y - previousPoint.y, destPoint.x - previousPoint.x);
         totalDistThresholdRemaining -= distTraveled;
