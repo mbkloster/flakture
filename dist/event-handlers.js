@@ -7,6 +7,9 @@ import { renderWillpowerBidPopup } from "./render/flakture/willpower-bid-popup";
 export const setupBoardHoverAndClick = (flakture) => {
     // Hover
     flakture.svg.addEventListener("mousemove", event => {
+        if (flakture.gameState.winner) {
+            return;
+        } // Can't select a piece when the game is already won
         const mouseEvent = event;
         const point = {
             x: mouseEvent.offsetX / flakture.renderRatio,
@@ -32,6 +35,9 @@ export const setupBoardHoverAndClick = (flakture) => {
     });
     // Click
     flakture.svg.addEventListener("click", event => {
+        if (flakture.gameState.winner) {
+            return;
+        } // Can't select a piece when the game is already won
         const mouseEvent = event;
         const point = {
             x: mouseEvent.offsetX / flakture.renderRatio,

@@ -6,8 +6,10 @@ type DistanceBarProps = Record<Side, {
     fillAfterDistanceAndRefresh: number;
 }>;
 export declare const sideConfirmedIcon: (flakture: Flakture, side: Side) => HTMLElement | SVGElement;
+export declare const sideLostButton: () => string;
 export declare const sideSubmitButton: (flakture: Flakture, side: Side) => HTMLElement | SVGElement;
 export declare const sideThinkingButton: () => string;
+export declare const sideWonButton: () => string;
 export declare const clearDestinationsAndHideControls: (flakture: Flakture) => void;
 export declare const deriveDistanceFillProps: (flakture: Flakture) => DistanceBarProps;
 export declare const clearRenderedDestinations: (flakture: Flakture) => void;

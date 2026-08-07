@@ -79,6 +79,10 @@ html {
         display: flex;
     }
 
+    .control-bar-confirmer {
+        user-select: none;
+    }
+
     .control-bar-confirmer-confirm {
         background-color: #505050;
         border: none;

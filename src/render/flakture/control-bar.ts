@@ -24,6 +24,11 @@ export const sideConfirmedIcon = (flakture: Flakture, side: Side) => {
 }
 
 // ==========================================================================
+export const sideLostButton = () => {
+    return "😭";
+}
+
+// ==========================================================================
 export const sideSubmitButton = (flakture: Flakture, side: Side) => {
     const elem = flakture.createElem("button", {
         attributes: {"class": `control-bar-confirmer-confirm control-bar-confirmer-confirm-${side} is-${flakture.gameProperties.colors[side]}`, "data-side": side},
@@ -36,6 +41,11 @@ export const sideSubmitButton = (flakture: Flakture, side: Side) => {
 // ==========================================================================
 export const sideThinkingButton = () => {
     return "🤔";
+}
+
+// ==========================================================================
+export const sideWonButton = () => {
+    return "🏆";
 }
 
 // ==========================================================================
@@ -88,7 +98,11 @@ export const renderControlBar = (flakture: Flakture) => {
         renderDistanceLine(flakture, distFillProps, side);
         flakture.elem(`control-bar-willpower-number-${ side }`).innerHTML = flakture.gameState.willpower[side].toString();
         const submitContainer = flakture.elem(`control-bar-confirmer-${side}`);
-        if (turn.moveSubmissionTimes[side]) {
+        if (flakture.gameState.winner === side) {
+            submitContainer.replaceChildren(sideWonButton());
+        } else if (flakture.gameState.winner) {
+            submitContainer.replaceChildren(sideLostButton());
+        } else if (turn.moveSubmissionTimes[side]) {
             submitContainer.replaceChildren(sideConfirmedIcon(flakture, side));
         } else if (!flakture.controllingSides.includes(side)) {
             submitContainer.innerHTML = sideThinkingButton();
