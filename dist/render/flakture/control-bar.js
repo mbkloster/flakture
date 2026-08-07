@@ -22,7 +22,8 @@ export const sideThinkingButton = () => {
 // ==========================================================================
 export const clearDestinationsAndHideControls = (flakture) => {
     if (flakture.selectedPieceIndex !== null) {
-        flakture.ensureElemRemoved(`dest-${flakture.selectedPieceIndex}`);
+        flakture.ensureElemRemoved(`dest-below-${flakture.selectedPieceIndex}`);
+        flakture.ensureElemRemoved(`dest-above-${flakture.selectedPieceIndex}`);
         flakture.ensureElemRemoved("conflict-point");
     }
     flakture.elem("control-bar-speed").classList.add("is-hidden");

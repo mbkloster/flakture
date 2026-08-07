@@ -142,18 +142,43 @@ export const renderDestinations = (flakture: Flakture) => {
 // Used in two places so that we can render both standard and redeployed pieces
 const renderDestinationForPiece = (flakture: Flakture, pieceIndex: number, pieceStart: Coord, destPoints: Coord[]) => {
     let previousPoint: { x: number, y: number } = pieceStart;
-    const { renderRatio } = flakture;
+    const { renderRatio, ruleset } = flakture;
     let enteredFlagArea = false;
     const side = flakture.gameState.pieces[pieceIndex].side;
+    let totalDistThresholdRemaining = ruleset.PIECE_DIST_HIGH_COST_THRESHOLD;
     destPoints.forEach(destPoint => {
-        flakture.ensureElem(`dest-line dest-${pieceIndex} dest-${pieceIndex}-${destPoint.x}-${destPoint.y}`, 'line', {
+        let distTraveled = Math.sqrt(Math.pow(destPoint.y - previousPoint.y, 2) + Math.pow(destPoint.x - previousPoint.x, 2));
+        const distBelowThreshold = Math.max(0, Math.min(distTraveled, totalDistThresholdRemaining));
+        const distPastThreshold = distTraveled - distBelowThreshold;
+        const angle = Math.atan2(destPoint.y - previousPoint.y, destPoint.x - previousPoint.x);
+        totalDistThresholdRemaining -= distTraveled;
+        const pointBelowThreshold = {
+            x: previousPoint.x + Math.cos(angle) * distBelowThreshold,
+            y: previousPoint.y + Math.sin(angle) * distBelowThreshold,
+        }
+        const pointPastThreshold = {
+            x: pointBelowThreshold.x + Math.cos(angle) * distPastThreshold,
+            y: pointBelowThreshold.y + Math.sin(angle) * distPastThreshold,
+        }
+        flakture.ensureElem(`dest-line dest-below-${pieceIndex} dest-above-${pieceIndex}-${destPoint.x}-${destPoint.y}`, 'line', {
             appendTo: flakture.svg,
             attributes: {
                 x1: (previousPoint.x * renderRatio).toString(),
                 y1: (previousPoint.y * renderRatio).toString(),
-                x2: (destPoint.x * renderRatio).toString(),
-                y2: (destPoint.y * renderRatio).toString(),
+                x2: (pointBelowThreshold.x * renderRatio).toString(),
+                y2: (pointBelowThreshold.y * renderRatio).toString(),
                 stroke: COLORS.destinationLine,
+            }, isSvg: true
+        });
+        flakture.ensureElem(`dest-line dest-above-${pieceIndex} dest-above-${pieceIndex}-${destPoint.x}-${destPoint.y}`, 'line', {
+            appendTo: flakture.svg,
+            attributes: {
+                x1: (pointBelowThreshold.x * renderRatio).toString(),
+                y1: (pointBelowThreshold.y * renderRatio).toString(),
+                x2: (pointPastThreshold.x * renderRatio).toString(),
+                y2: (pointPastThreshold.y * renderRatio).toString(),
+                stroke: COLORS.destinationLine,
+                "stroke-width": "3"
             }, isSvg: true
         });
         if (!enteredFlagArea) {
