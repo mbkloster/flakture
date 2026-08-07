@@ -1,3 +1,4 @@
+import { BothSides } from "../../common-types";
 // ==========================================================================
 export const renderWillpowerBidPopup = (flakture) => {
     const maxBid = flakture.gameState.willpower[flakture.selectedSide] - Object.keys(flakture.currentTurn().moves[flakture.selectedSide].redeployments).length;
@@ -76,6 +77,25 @@ export const renderWillpowerBidPopup = (flakture) => {
                 input.value = value.toString();
             }
         }
+    });
+    const willpowerBankElem = flakture.createElem("div", {
+        appendTo: formElem,
+        attributes: { "class": "willpower-bid-popup-form-bank" },
+    });
+    const { selectedSide } = flakture;
+    BothSides.forEach(side => {
+        willpowerBankElem.append(flakture.createElem("div", {
+            attributes: { className: `willpower-bid-popup-form-bank-side is-${side} is-${flakture.gameProperties.colors[side]}` },
+            children: [
+                flakture.createElem("div", {
+                    attributes: { className: "side-number" },
+                    children: [flakture.gameState.willpower[side].toString()]
+                }),
+                flakture.createElem("div", {
+                    children: [selectedSide === side ? "You" : flakture.gameProperties.names[side]]
+                }),
+            ]
+        }));
     });
     const controlsElem = flakture.createElem("div", {
         appendTo: formElem,

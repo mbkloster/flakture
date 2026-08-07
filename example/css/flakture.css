@@ -321,6 +321,29 @@ html {
         }
     }
 
+    .willpower-bid-popup-form-bank {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .willpower-bid-popup-form-bank-side {
+        &.is-blue {
+            color: #6a6af5;
+        }
+
+        &.is-red {
+            color: #f05050;
+        }
+
+        &.is-right {
+            text-align: right;
+        }
+
+        .side-number {
+            font-weight: bold;
+        }
+    }
+
     .willpower-bid-popup-form-cancel {
         background-color: #b00000;
         color: #fff;
