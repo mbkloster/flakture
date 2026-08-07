@@ -6,5 +6,6 @@ export declare const setupClickRedeploy: (flakture: Flakture, button: Element) =
 export declare const setupClickSpeedChange: (flakture: Flakture, radio: Element) => void;
 export declare const setupClickUndoRedeploy: (flakture: Flakture, button: Element) => void;
 export declare const setupSelectedSideClick: (flakture: Flakture, elem: HTMLButtonElement, side: Side) => void;
+export declare const setupSpaceConfirm: (flakture: Flakture) => void;
 export declare const setupUndo: (flakture: Flakture, undoElement: Element) => void;
 //# sourceMappingURL=event-handlers.d.ts.map

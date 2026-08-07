@@ -5,7 +5,7 @@ import {
 import {
     setupClickConfirm, setupClickRedeploy,
     setupClickSpeedChange, setupClickUndoRedeploy,
-    setupSelectedSideClick,
+    setupSelectedSideClick, setupSpaceConfirm,
     setupUndo,
 } from "../../event-handlers";
 import {distanceCost} from "../../ctf-state-transition";

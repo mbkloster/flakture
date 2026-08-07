@@ -120,6 +120,17 @@ export const setupSelectedSideClick = (flakture: Flakture, elem: HTMLButtonEleme
 }
 
 // ==========================================================================
+export const setupSpaceConfirm = (flakture: Flakture) => {
+    window.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === " ") {
+            if (!flakture.controllingSides.length) { return true; } // Can't submit moves if you don't control anything
+            flakture.selectedSide ||= flakture.controllingSides[0];
+            renderWillpowerBidPopup(flakture);
+        }
+    });
+}
+
+// ==========================================================================
 export const setupUndo = (flakture: Flakture, undoElement: Element) => {
     undoElement.addEventListener("click", () => {
         flakture.removeDestination();

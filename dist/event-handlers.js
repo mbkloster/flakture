@@ -110,6 +110,18 @@ export const setupSelectedSideClick = (flakture, elem, side) => {
     });
 };
 // ==========================================================================
+export const setupSpaceConfirm = (flakture) => {
+    window.addEventListener("keydown", (event) => {
+        if (event.key === " ") {
+            if (!flakture.controllingSides.length) {
+                return true;
+            } // Can't submit moves if you don't control anything
+            flakture.selectedSide ||= flakture.controllingSides[0];
+            renderWillpowerBidPopup(flakture);
+        }
+    });
+};
+// ==========================================================================
 export const setupUndo = (flakture, undoElement) => {
     undoElement.addEventListener("click", () => {
         flakture.removeDestination();

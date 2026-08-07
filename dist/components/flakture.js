@@ -3,7 +3,7 @@ import { assembleCtfState, derivePieceCodex } from "../ctf-state-assembly";
 import { BothSides } from "../common-types";
 import { renderDestinations, renderHoveredPiece, renderInitialBoard, renderMovedPieces, renderRedeployedPieces, renderRedeployLine, renderRedeployPoint, renderSelectedPiece, renderWillpowerBidOpacities, renderWillpowerBids, rerenderFlag, rerenderGameContextTurn, rerenderWillpowerBids } from "../render/flakture/board";
 import { clearRenderedDestinations, clearDestinationsAndHideControls, deriveDistanceFillProps, renderControlBar, renderDistanceFill, renderDistanceLine, renderInitialControlBar, sideConfirmedIcon } from "../render/flakture/control-bar";
-import { setupBoardHoverAndClick } from "../event-handlers";
+import { setupBoardHoverAndClick, setupSpaceConfirm } from "../event-handlers";
 import { RULESETS } from "../ctf-defines";
 import { newTurn } from "../factories";
 import { distanceCost, runTimeSlice, startGameMovement, stopGameMovement } from "../ctf-state-transition";
@@ -95,6 +95,7 @@ export default class Flakture extends ApplicationComponent {
         renderInitialControlBar(this);
         // Event handlers
         setupBoardHoverAndClick(this);
+        setupSpaceConfirm(this);
         renderWillpowerBids(this);
         containingElem.classList.add("is-ready");
     }

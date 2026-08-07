@@ -1,6 +1,39 @@
 import { BothSides } from "../../common-types";
 // ==========================================================================
 export const renderWillpowerBidPopup = (flakture) => {
+    if (flakture.elemExists("willpower-bid-popup")) {
+        return;
+    }
+    let mostRecentNumberTypeTime = Date.now() - 3600000;
+    const CONCATENATE_NUMBERS_WITHIN_MS = 1250;
+    const submitMove = () => {
+        const inputElem = flakture.elem("willpower-bid-popup-form-input");
+        const willpowerBid = parseInt(inputElem.value) || 0;
+        flakture.confirmMove(willpowerBid);
+        document.removeEventListener("keydown", handleKeyDown);
+        flakture.ensureElemRemoved("willpower-bid-popup"); // Bye bye
+        // So that stale input elem doesn't persist:
+        flakture.ensureElemRemoved("willpower-bid-popup-form-input");
+    };
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            event.stopPropagation();
+            submitMove();
+        }
+        else if (!isNaN(parseInt(event.key))) {
+            const inputElem = flakture.elem("willpower-bid-popup-form-input");
+            const newTime = Date.now();
+            if (newTime <= mostRecentNumberTypeTime + CONCATENATE_NUMBERS_WITHIN_MS) {
+                inputElem.setAttribute("value", inputElem.getAttribute("value") + event.key);
+            }
+            else {
+                inputElem.setAttribute("value", event.key);
+            }
+            mostRecentNumberTypeTime = newTime;
+        }
+    };
+    document.addEventListener("keydown", handleKeyDown);
     const maxBid = flakture.gameState.willpower[flakture.selectedSide] - Object.keys(flakture.currentTurn().moves[flakture.selectedSide].redeployments).length;
     const popupElem = flakture.createElem("div", {
         appendTo: flakture.containingElem,
@@ -21,13 +54,8 @@ export const renderWillpowerBidPopup = (flakture) => {
         eventHandlers: {
             submit: event => {
                 event.preventDefault();
-                const inputElem = flakture.elem("willpower-bid-popup-form-input");
-                const willpowerBid = parseInt(inputElem.value) || 0;
-                flakture.confirmMove(willpowerBid);
-                flakture.ensureElemRemoved("willpower-bid-popup"); // Bye bye
-                // So that stale input elem doesn't persist:
-                flakture.ensureElemRemoved("willpower-bid-popup-form-input");
-            }
+                submitMove();
+            },
         }
     });
     const numbersElem = flakture.createElem("form", {
@@ -112,6 +140,7 @@ export const renderWillpowerBidPopup = (flakture) => {
         eventHandlers: {
             click: event => {
                 event.preventDefault();
+                document.removeEventListener("keydown", handleKeyDown);
                 flakture.ensureElemRemoved("willpower-bid-popup"); // Bye bye
                 // So that stale input elem doesn't persist:
                 flakture.ensureElemRemoved("willpower-bid-popup-form-input");

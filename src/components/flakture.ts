@@ -29,7 +29,7 @@ import {
     renderInitialControlBar,
     sideConfirmedIcon
 } from "../render/flakture/control-bar";
-import {setupBoardHoverAndClick} from "../event-handlers";
+import {setupBoardHoverAndClick, setupSpaceConfirm} from "../event-handlers";
 import {RULESETS} from "../ctf-defines";
 import {newTurn} from "../factories";
 import {distanceCost, runTimeSlice, startGameMovement, stopGameMovement} from "../ctf-state-transition";
@@ -142,6 +142,7 @@ export default class Flakture extends ApplicationComponent {
 
         // Event handlers
         setupBoardHoverAndClick(this);
+        setupSpaceConfirm(this);
 
         renderWillpowerBids(this);
         containingElem.classList.add("is-ready");
