@@ -29,8 +29,8 @@ export const RULESETS: Record<RulesetName, Ruleset> = {
         FLAG_LOOSE_TURNS: 3,
         FLAG_R: 55,
         
-        PIECE_DIST_HIGH_COST_MULTIPLIER: 2,
-        PIECE_DIST_HIGH_COST_THRESHOLD: BOARD_W * 0.4,
+        PIECE_DIST_HIGH_COST_MULTIPLIER: 2.2,
+        PIECE_DIST_HIGH_COST_THRESHOLD: BOARD_W * 0.25,
         PIECE_PER_SIDE: 21,
         PIECE_R: 14,
 
