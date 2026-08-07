@@ -117,7 +117,7 @@ export const renderControlBar = (flakture: Flakture) => {
         }
 
         const deadCount = deriveDeadPieceCount(flakture.gameState.pieces, flakture.selectedSide);
-        if (deadCount > 0) {
+        if (deadCount > 0 && !flakture.gameState.winner) {
             const redeployableCount = flakture.netRedeployableCount();
             flakture.elem("control-bar-redeploy").classList.remove("is-hidden");
             flakture.elem("control-bar-redeploy").innerHTML = `Redeploy (${redeployableCount})`;
