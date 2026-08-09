@@ -1,5 +1,6 @@
 export declare const COLORS: {
     background: string;
+    deadPieceCount: string;
     destinationLine: string;
     flagBackground: {
         blue: string;
@@ -55,6 +56,14 @@ export declare const CONFLICT_POINT_RADIUS = 4;
 export declare const FLAG_DISPLAY_W = 15;
 export declare const FLAG_DISPLAY_H = 25;
 export declare const FONTS: {
+    deadPieceCount: {
+        face: string;
+        size: number;
+    };
+    deadPieceSkull: {
+        face: string;
+        size: number;
+    };
     gameContextNames: {
         face: string;
         size: number;

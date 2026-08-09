@@ -74,25 +74,12 @@ export const renderDeadPieces = (flakture: Flakture) => {
     BothSides.forEach(side => {
         const deadPieceCount = deriveDeadPieceCount(flakture.gameState.pieces, side, flakture.gameMovement?.pieces ?? {});
         if (deadPieceCount) {
-            const iconX = (side === Side.left) ? 50 : (ruleset.BOARD_W - 50);
-            const textX = (side === Side.left) ? 70 : (ruleset.BOARD_W - 70);
-            flakture.svg.append(flakture.createSvgElem("text", {
-                attributes: {
-                    className: `dead-piece-count-${side}`, "font-size": "40px", opacity: "0.4", "text-anchor": "middle",
-                    x: iconX.toString(), y: "50"
-                },
-                children: ["💀"]
-            }));
-            flakture.svg.append(flakture.createSvgElem("text", {
-                attributes: {
-                    className: `dead-piece-skull-${side}`, fill: "#fff", "font-size": "26px", opacity: "0.6",
-                    stroke: "#fff", "text-anchor": "middle", x: textX.toString(), y: "30"
-                },
-                children: [`x${deadPieceCount}`]
-            }));
+            flakture.elem(`dead-piece-count-${side}`).innerHTML = `x${deadPieceCount}`;
+            flakture.elem(`dead-piece-count-${side}`).classList.remove("is-transparent");
+            flakture.elem(`dead-piece-skull-${side}`).classList.remove("is-transparent");
         } else {
-            flakture.ensureElemRemoved(`dead-piece-count-${side}`);
-            flakture.ensureElemRemoved(`dead-piece-skull-${side}`);
+            flakture.elem(`dead-piece-count-${side}`).classList.add("is-transparent");
+            flakture.elem(`dead-piece-skull-${side}`).classList.add("is-transparent");
         }
     });
 }
@@ -448,6 +435,27 @@ export const renderInitialBoard = (flakture: Flakture) => {
             x: (BOARD_W * 0.5 * renderRatio).toString(),
             y: (BOARD_H * 0.5 * renderRatio).toString(),
         }, children: [gameContextTurnText(flakture.currentTurn())]
+    });
+
+    BothSides.forEach(side => {
+        const deadPieceCount = deriveDeadPieceCount(flakture.gameState.pieces, side, flakture.gameMovement?.pieces ?? {});
+        const iconX = (side === Side.left) ? 50 : (ruleset.BOARD_W - 50);
+        const textX = (side === Side.left) ? 70 : (ruleset.BOARD_W - 70);
+        layers[4].append(flakture.createSvgElem("text", {
+            attributes: {
+                className: `dead-piece-skull dead-piece-skull-${side} is-transparent`, "font-size": `${FONTS.deadPieceSkull.size}px`, opacity: "0.4", "text-anchor": "middle",
+                x: iconX.toString(), y: "50"
+            },
+            children: ["💀"]
+        }));
+        layers[4].append(flakture.createSvgElem("text", {
+            attributes: {
+                className: `dead-piece-count dead-piece-count-${side} is-transparent`, fill: COLORS.deadPieceCount,
+                "font-family": FONTS.deadPieceCount.face, "font-size": `${FONTS.deadPieceCount.size}px`, opacity: "0.6",
+                stroke: COLORS.deadPieceCount, "text-anchor": "middle", x: textX.toString(), y: "30"
+            },
+            children: [`x${deadPieceCount}`]
+        }));
     });
 }
 

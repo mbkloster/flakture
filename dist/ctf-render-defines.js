@@ -1,6 +1,7 @@
 import { PlayerColor } from "./common-types";
 export const COLORS = {
     background: "#101010",
+    deadPieceCount: "#fff",
     destinationLine: "#f0f0f0",
     flagBackground: {
         [PlayerColor.blue]: "#000070",
@@ -56,6 +57,12 @@ export const CONFLICT_POINT_RADIUS = 4;
 export const FLAG_DISPLAY_W = 15;
 export const FLAG_DISPLAY_H = 25;
 export const FONTS = {
+    deadPieceCount: {
+        face: "Verdana, Arial, Helvetica, Sans-Serif", size: 26
+    },
+    deadPieceSkull: {
+        face: "N/A", size: 40
+    },
     gameContextNames: {
         face: "Verdana, Arial, Helvetica, Sans-Serif", size: 64
     },

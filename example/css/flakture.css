@@ -192,6 +192,28 @@ html {
         }
     }
 
+    .dead-piece-count {
+        pointer-events: none;
+        opacity: 0.6;
+        transition: opacity ease-in-out 500ms;
+        user-select: none;
+
+        &.is-transparent {
+            opacity: 0;
+        }
+    }
+
+    .dead-piece-skull {
+        pointer-events: none;
+        opacity: 0.4;
+        transition: opacity ease-in-out 500ms;
+        user-select: none;
+
+        &.is-transparent {
+            opacity: 0;
+        }
+    }
+
     button {
         background-color: #202020;
         border: 1px solid #505050;
