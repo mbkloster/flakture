@@ -5,6 +5,9 @@ import {renderControlBar} from "./render/flakture/control-bar";
 import {renderRedeployPoint} from "./render/flakture/board"
 import {redeployedPieceMap} from "./utilities";
 import {renderWillpowerBidPopup} from "./render/flakture/willpower-bid-popup";
+import {distanceCost} from "./ctf-state-transition";
+import {Notification} from "./animations/notification";
+import {COLORS} from "./ctf-render-defines";
 
 // ==========================================================================
 export const setupBoardHoverAndClick = (flakture: Flakture) => {
@@ -94,10 +97,23 @@ export const setupClickSpeedChange = (flakture: Flakture, radio: Element) => {
         const { name, side } = selectedPiece;
         const orderNumber = parseInt(name.replace(side, ""));
         const currentTurn = flakture.currentTurn();
+        const previousSpeed = currentTurn.moves[side]!.pieces[orderNumber].speed;
         if (currentTurn.moves[side]!.pieces[orderNumber]) {
             currentTurn.moves[side]!.pieces[orderNumber].speed = parseInt(target.getAttribute("value")!);
         }
-        renderControlBar(flakture);
+        const cost = distanceCost(flakture.ruleset, flakture.gameState, flakture.currentTurn().moves, flakture.pieceCodex);
+        if (cost[side] > flakture.gameState.distance[side]) {
+            // Revert speed if the new speed would put us over the top
+            currentTurn.moves[side]!.pieces[orderNumber].speed = previousSpeed;
+            (flakture.elem(`speed-radio-${previousSpeed}`) as HTMLInputElement).checked = true;
+            flakture.addAnimation(
+                new Notification(flakture, "Not enough distance to go that fast",
+                    COLORS.notification.neutral, COLORS.notificationOutline.neutral,
+                    0.1, 1, 1.15)
+            );
+        } else {
+            renderControlBar(flakture);
+        }
     });
 }
 

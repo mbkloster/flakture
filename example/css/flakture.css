@@ -142,6 +142,7 @@ html {
     .control-bar-distance-box-fill {
         background-color: #a0a0a0;
         height: 100%;
+        transition: width ease-in-out 500ms;
 
         &.is-blue {
             background-color: #0000b0;
@@ -159,6 +160,7 @@ html {
         height: 100%;
         position: absolute;
         top: 0;
+        transition: left ease-in-out 300ms;
         width: 1px;
         z-index: 1;
     }
