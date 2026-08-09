@@ -35,11 +35,21 @@ export type CtfGameProperties = {
     rulesetName: RulesetName
 }
 
+export type CtfGameMovementPiece = {
+    dead: boolean
+    destinations: {x: number, y: number}[]
+    direction: "l" | "r"
+    opacity: number
+    speed: number
+    x: number
+    y: number
+};
+
 export type CtfGameMovement = {
     distanceTraveled: Record<Side, number>
     finalized: boolean
     flags: Record<Side, FlagState>
-    pieces: Record<number, {direction: "l" | "r", speed: number, x: number, y: number, dead: boolean, opacity: number, destinations: {x: number, y: number}[]}>
+    pieces: Record<number, CtfGameMovementPiece>
     stillMovingPieces: Set<number>
     willpowerBid: Record<Side, number>
     willpowerUsed: Set<Side>

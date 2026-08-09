@@ -14,10 +14,13 @@ export const redeployedPieceMap = (flakture) => {
     return deadPieceNameToPos;
 };
 // ==========================================================================
-export const deriveDeadPieceCount = (pieces, side) => {
+export const deriveDeadPieceCount = (pieces, side, movementPieces = {}) => {
     let count = 0;
-    pieces.forEach(piece => {
-        if (piece.side === side && piece.dead) {
+    pieces.forEach((piece, i) => {
+        if (movementPieces[i] && piece.side === side) {
+            count += movementPieces[i].dead ? 1 : 0;
+        }
+        else if (piece.side === side && piece.dead) {
             count++;
         }
     });

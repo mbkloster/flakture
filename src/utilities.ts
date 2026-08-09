@@ -1,4 +1,14 @@
-import {Coord, CtfGameProperties, CtfGameState, Line, Piece, Ruleset, Side, Turn} from "./common-types";
+import {
+    Coord,
+    CtfGameMovementPiece,
+    CtfGameProperties,
+    CtfGameState,
+    Line,
+    Piece,
+    Ruleset,
+    Side,
+    Turn
+} from "./common-types";
 import Flakture from "components/flakture";
 import {RULESETS} from "./ctf-defines";
 
@@ -17,10 +27,12 @@ export const redeployedPieceMap = (flakture: Flakture): Record<string, {x: numbe
 }
 
 // ==========================================================================
-export const deriveDeadPieceCount = (pieces: Piece[], side: Side): number => {
+export const deriveDeadPieceCount = (pieces: Piece[], side: Side, movementPieces: Record<number, CtfGameMovementPiece> = {}): number => {
     let count = 0;
-    pieces.forEach(piece => {
-        if (piece.side === side && piece.dead) {
+    pieces.forEach((piece, i) => {
+        if (movementPieces[i] && piece.side === side) {
+            count += movementPieces[i].dead ? 1 : 0;
+        } else if (piece.side === side && piece.dead) {
             count++;
         }
     });

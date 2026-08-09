@@ -11,6 +11,7 @@ import {
     Turn
 } from "../common-types";
 import {
+    renderDeadPieces,
     renderDestinations,
     renderHoveredPiece,
     renderInitialBoard,
@@ -176,6 +177,9 @@ export default class Flakture extends ApplicationComponent {
             if (this.timeTicker >= ruleset.TIME_SLICE_S) {
                 if (this.gameMovement) {
                     const meta = runTimeSlice(this.ruleset, this.gameState, this.gameMovement, this.pieceCodex);
+                    if (meta.collisions.length) {
+                        renderDeadPieces(this);
+                    }
                     const firstImportantCollision = meta.collisions.find(col => col.deductedWillpower || col.flagCarriers);
                     if (firstImportantCollision) {
                         const collision = firstImportantCollision;
@@ -349,6 +353,7 @@ export default class Flakture extends ApplicationComponent {
         this.conflictPoints = [];
         clearDestinationsAndHideControls(this);
         this.gameMovement = startGameMovement(this.ruleset, this.gameState, this.currentTurn(), this.pieceCodex);
+        renderDeadPieces(this);
         this.hoveredPieceIndex = null;
         this.selectedPieceIndex = null;
         if (this.controllingSides.length !== 1) {

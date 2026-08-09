@@ -24,7 +24,7 @@ import {
     Side
 } from "../../common-types";
 import Flakture from "../../components/flakture";
-import {opponentSide, redeployedPieceMap} from "../../utilities";
+import {deriveDeadPieceCount, opponentSide, redeployedPieceMap} from "../../utilities";
 import {flagEntryPoint, gameContextTurnText} from "../../utilities/render-utilities";
 import {inFlagZone} from "../../utilities/board-utilities";
 
@@ -66,6 +66,35 @@ const willpowerBidTextRenderPos = (flakture: Flakture, side: Side) => {
             ? ((ruleset.BOARD_W / 2 - WILLPOWER_BID_INITIAL_PADDING) * renderRatio)
             : ((ruleset.BOARD_W / 2 + WILLPOWER_BID_INITIAL_PADDING) * renderRatio);
     return { x, y: (ruleset.BOARD_H / 2) * renderRatio}
+}
+
+// ==========================================================================
+export const renderDeadPieces = (flakture: Flakture) => {
+    const { ruleset } = flakture;
+    BothSides.forEach(side => {
+        const deadPieceCount = deriveDeadPieceCount(flakture.gameState.pieces, side, flakture.gameMovement?.pieces ?? {});
+        if (deadPieceCount) {
+            const iconX = (side === Side.left) ? 50 : (ruleset.BOARD_W - 50);
+            const textX = (side === Side.left) ? 70 : (ruleset.BOARD_W - 70);
+            flakture.svg.append(flakture.createSvgElem("text", {
+                attributes: {
+                    className: `dead-piece-count-${side}`, "font-size": "40px", opacity: "0.4", "text-anchor": "middle",
+                    x: iconX.toString(), y: "50"
+                },
+                children: ["💀"]
+            }));
+            flakture.svg.append(flakture.createSvgElem("text", {
+                attributes: {
+                    className: `dead-piece-skull-${side}`, fill: "#fff", "font-size": "26px", opacity: "0.6",
+                    stroke: "#fff", "text-anchor": "middle", x: textX.toString(), y: "30"
+                },
+                children: [`x${deadPieceCount}`]
+            }));
+        } else {
+            flakture.ensureElemRemoved(`dead-piece-count-${side}`);
+            flakture.ensureElemRemoved(`dead-piece-skull-${side}`);
+        }
+    });
 }
 
 // ==========================================================================
