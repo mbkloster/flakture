@@ -11,6 +11,7 @@ import {
     Turn
 } from "../common-types";
 import {
+    renderBoard,
     renderDeadPieces,
     renderDestinations,
     renderHoveredPiece,
@@ -147,6 +148,13 @@ export default class Flakture extends ApplicationComponent {
 
         renderWillpowerBids(this);
         containingElem.classList.add("is-ready");
+    }
+
+    // ==========================================================================
+    // Usually in response to changes in game state from elsewhere
+    renderBoardAndControlBar() {
+        renderBoard(this);
+        renderControlBar(this);
     }
 
     // ==========================================================================

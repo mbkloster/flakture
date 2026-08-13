@@ -1,7 +1,7 @@
 import ApplicationComponent from "./application-component";
 import { assembleCtfState, derivePieceCodex } from "../ctf-state-assembly";
 import { BothSides } from "../common-types";
-import { renderDeadPieces, renderDestinations, renderHoveredPiece, renderInitialBoard, renderMovedPieces, renderRedeployedPieces, renderRedeployLine, renderRedeployPoint, renderSelectedPiece, renderWillpowerBidOpacities, renderWillpowerBids, rerenderFlag, rerenderGameContextTurn, rerenderWillpowerBids } from "../render/flakture/board";
+import { renderBoard, renderDeadPieces, renderDestinations, renderHoveredPiece, renderInitialBoard, renderMovedPieces, renderRedeployedPieces, renderRedeployLine, renderRedeployPoint, renderSelectedPiece, renderWillpowerBidOpacities, renderWillpowerBids, rerenderFlag, rerenderGameContextTurn, rerenderWillpowerBids } from "../render/flakture/board";
 import { clearRenderedDestinations, clearDestinationsAndHideControls, deriveDistanceFillProps, renderControlBar, renderDistanceFill, renderDistanceLine, renderInitialControlBar, sideConfirmedIcon } from "../render/flakture/control-bar";
 import { setupBoardHoverAndClick, setupSpaceConfirm } from "../event-handlers";
 import { RULESETS } from "../ctf-defines";
@@ -98,6 +98,12 @@ export default class Flakture extends ApplicationComponent {
         setupSpaceConfirm(this);
         renderWillpowerBids(this);
         containingElem.classList.add("is-ready");
+    }
+    // ==========================================================================
+    // Usually in response to changes in game state from elsewhere
+    renderBoardAndControlBar() {
+        renderBoard(this);
+        renderControlBar(this);
     }
     // ==========================================================================
     sidesConfirmed() {

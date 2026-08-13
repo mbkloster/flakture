@@ -43,6 +43,25 @@ const willpowerBidTextRenderPos = (flakture, side) => {
     return { x, y: (ruleset.BOARD_H / 2) * renderRatio };
 };
 // ==========================================================================
+export const renderBoard = (flakture) => {
+    const { renderRatio, gameState } = flakture;
+    Object.entries(gameState.pieces).forEach(indexAndPiece => {
+        const [i, piece] = indexAndPiece;
+        const gameStatePiece = gameState.pieces[parseInt(i)];
+        const pieceG = flakture.elem(`piece-g-${gameStatePiece.name}`);
+        if (piece.dead) {
+            pieceG.setAttribute("opacity", "0");
+        }
+        else {
+            pieceG.setAttribute("transform", `translate(${piece.x * renderRatio},${piece.y * renderRatio})`);
+        }
+        flakture.elem(`piece-g-eyes-${gameStatePiece.name}`).setAttribute("href", flakture.imagePaths[`eyes-${gameStatePiece.direction}`]);
+    });
+    BothSides.forEach(side => {
+        rerenderFlag(flakture, side);
+    });
+};
+// ==========================================================================
 export const renderDeadPieces = (flakture) => {
     const { ruleset } = flakture;
     BothSides.forEach(side => {
