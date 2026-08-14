@@ -4,6 +4,7 @@ export type {
     CtfGameMovement,
     CtfGameState,
     Coord,
+    Formation,
     Line,
     Piece,
     PieceCodex,
