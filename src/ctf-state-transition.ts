@@ -14,6 +14,7 @@ import {circlesCollide, inFlagZone} from "./utilities/board-utilities";
 import {RULESETS} from "./ctf-defines";
 import {derivePieceCodex} from "./ctf-state-assembly";
 import {deepClone} from "./utilities/data-utilities";
+import {RuleViolationException} from "./utilities/exceptions";
 
 function isLooseFlag(flagState: FlagState): flagState is LooseFlag {
     if (!flagState) { return false; }
@@ -216,6 +217,17 @@ export const runTimeSlice = (ruleset: Ruleset, ctfGameState: CtfGameState, movem
 // ==========================================================================
 export const startGameMovement = (ruleset: Ruleset, ctfGameState: CtfGameState, turn: Turn, pieceCodex: PieceCodex): CtfGameMovement => {
     const cost = distanceCost(ruleset, ctfGameState, turn.moves, pieceCodex);
+    BothSides.forEach(side => {
+        if (cost[side] > ctfGameState.distance[side]) {
+            throw new RuleViolationException("tooMuchDistance", {side});
+        }
+        Object.entries(turn.moves[side]!.pieces).forEach(([subid, destinations]) => {
+            const piece = ctfGameState.pieces.find(piece => piece.name === `${side}${subid}`)!;
+            if (piece.dead && !turn.moves[side]!.redeployments[parseInt(subid)]) {
+                throw new RuleViolationException("movingDeadPiece", {side, subid});
+            }
+        });
+    });
     const gameMovement: CtfGameMovement = {
         finalized: false,
         flags: { ...ctfGameState.flags },

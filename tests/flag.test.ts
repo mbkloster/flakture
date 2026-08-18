@@ -87,7 +87,7 @@ describe("CTF State flag transition", function () {
         };
         ctfStateFlagsLoose = {
             "decidingTurnNumber": 3,
-            "distance": {"left": 1600, "right": 1600},
+            "distance": {"left": 1800, "right": 1800},
             "flags": {"left": {x: 40, y: 40, untilDecidingTurnNumber: 4}, "right": {x: 140, y: 140, untilDecidingTurnNumber: 4}},
             "pieces": [
                 {

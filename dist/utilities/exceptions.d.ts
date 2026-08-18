@@ -14,8 +14,9 @@ export declare class MissingElementException extends CustomError {
     constructor(message: string);
 }
 export declare class RuleViolationException extends CustomError {
+    details: any;
     rule: string;
-    constructor(rule: string);
+    constructor(rule: string, details?: any);
 }
 export {};
 //# sourceMappingURL=exceptions.d.ts.map

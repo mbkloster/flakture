@@ -37,10 +37,12 @@ export class MissingElementException extends CustomError {
 }
 
 export class RuleViolationException extends CustomError {
+  details: any
   rule: string
 
-  constructor(rule: string) {
+  constructor(rule: string, details?: any) {
     super(rule);
+    this.details = details;
     this.rule = rule;
   }
 }

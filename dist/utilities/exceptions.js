@@ -29,9 +29,11 @@ export class MissingElementException extends CustomError {
     }
 }
 export class RuleViolationException extends CustomError {
+    details;
     rule;
-    constructor(rule) {
+    constructor(rule, details) {
         super(rule);
+        this.details = details;
         this.rule = rule;
     }
 }
