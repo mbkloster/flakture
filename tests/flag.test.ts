@@ -1,10 +1,16 @@
-import {CtfGameState, LooseFlag, PieceCodex, Side, Turn} from "common-types";
+import {Coord, CtfGameState, FlagState, LooseFlag, PieceCodex, Side, Turn} from "common-types";
 import {runTimeSlice, startGameMovement, stopGameMovement} from "ctf-state-transition";
 import {derivePieceCodex} from "ctf-state-assembly";
 import {RULESETS} from "ctf-defines";
+import {FLAG_CARRIER_DEATH_STATE, FLAG_CARRIER_DEATH_TURN} from "./presets/flag-carrier-death";
 
 const ruleset = RULESETS.AntiquatedAvian;
 const { BOARD_H, BOARD_W, FLAG_AREA_RADIUS, FLAG_AREA_THICKNESS, PIECE_R } = ruleset;
+
+function isLooseFlag(flagState: FlagState): flagState is LooseFlag {
+    if (!flagState) { return false; }
+    return (flagState as Coord).x !== undefined;
+}
 
 // ==========================================================================
 describe("CTF State flag transition", function () {
@@ -375,5 +381,26 @@ describe("CTF State flag transition", function () {
         expect(newCtfState.decidingTurnNumber).toEqual(4);
         expect(newCtfState.flags.left).toEqual(null);
         expect(newCtfState.flags.right).toEqual(null);
+    });
+
+    it("does not end up with a flag carrier being a dead piece", () => {
+        const turn: Turn = FLAG_CARRIER_DEATH_TURN;
+        pieceCodex = derivePieceCodex(FLAG_CARRIER_DEATH_STATE.pieces);
+
+        const movement = startGameMovement(ruleset, FLAG_CARRIER_DEATH_STATE, turn, pieceCodex);
+        for (let i = 0; movement.stillMovingPieces.size && i < 1000; i++) {
+            runTimeSlice(ruleset, FLAG_CARRIER_DEATH_STATE, movement, pieceCodex);
+        }
+
+        expect(movement.stillMovingPieces.size).toEqual(0);
+        const newCtfState = stopGameMovement(ruleset, ctfStateFlagsLoose, movement, turn);
+        if (newCtfState.flags.left !== null && !isLooseFlag(newCtfState.flags.left)) {
+            const flagPiece = newCtfState.pieces[newCtfState.flags.left];
+            expect(flagPiece.dead).toBeFalsy();
+        }
+        if (newCtfState.flags.right !== null && !isLooseFlag(newCtfState.flags.right)) {
+            const flagPiece = newCtfState.pieces[newCtfState.flags.right];
+            expect(flagPiece.dead).toBeFalsy();
+        }
     });
 });

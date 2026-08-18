@@ -189,11 +189,19 @@ export const runTimeSlice = (ruleset: Ruleset, ctfGameState: CtfGameState, movem
         const gamePiece = ctfGameState.pieces[i];
         const oppSide = opponentSide(gamePiece.side);
         const movementPiece = movement.pieces[i];
-        if ((movement.flags[oppSide] === null || isLooseFlag(movement.flags[oppSide])) && inFlagZone(ruleset, opponentSide(gamePiece.side), movementPiece)) {
+        if (
+            !movementPiece.dead &&
+            (movement.flags[oppSide] === null || isLooseFlag(movement.flags[oppSide])) &&
+            inFlagZone(ruleset, opponentSide(gamePiece.side), movementPiece)
+        ) {
             movement.flags[oppSide] = i;
         } else if (i === movement.flags[oppSide] && inFlagZone(ruleset, gamePiece.side, movementPiece)) {
             movement.winner = gamePiece.side;
-        } else if (isLooseFlag(movement.flags[oppSide]) && !movementPiece.dead && circlesCollide(movement.flags[oppSide], ruleset.FLAG_R, movementPiece, ruleset.PIECE_R)) {
+        } else if (
+            isLooseFlag(movement.flags[oppSide]) &&
+            !movementPiece.dead &&
+            circlesCollide(movement.flags[oppSide], ruleset.FLAG_R, movementPiece, ruleset.PIECE_R)
+        ) {
             movement.flags[oppSide] = i;
         }
     });
