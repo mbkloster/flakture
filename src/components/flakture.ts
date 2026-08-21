@@ -169,6 +169,17 @@ export default class Flakture extends ApplicationComponent {
         const side = this.selectedSide!;
         turn.moves[side]!.willpowerBid = willpowerBid;
         turn.moveSubmissionTimes[side] ||= Date.now();
+
+        const event = new CustomEvent('moveSubmission', {
+            detail: {
+                turn,
+                side
+            },
+            bubbles: true, // Allow the event to bubble up the DOM
+            cancelable: true
+        });
+        this.containingElem.dispatchEvent(event);
+
         this.elem(`control-bar-confirmer-${side}`).replaceChildren(sideConfirmedIcon(this, side));
         if (this.sidesConfirmed().length >= 2) {
             this.kickstartIntoMotion();
