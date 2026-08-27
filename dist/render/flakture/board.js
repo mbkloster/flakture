@@ -53,6 +53,7 @@ export const renderBoard = (flakture) => {
             pieceG.setAttribute("opacity", "0");
         }
         else {
+            pieceG.setAttribute("opacity", "1");
             pieceG.setAttribute("transform", `translate(${piece.x * renderRatio},${piece.y * renderRatio})`);
         }
         flakture.elem(`piece-g-eyes-${gameStatePiece.name}`).setAttribute("href", flakture.imagePaths[`eyes-${gameStatePiece.direction}`]);
