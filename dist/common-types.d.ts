@@ -79,7 +79,6 @@ export type Ruleset = {
     DISTANCE_MAX: number;
     DISTANCE_PER_TURN: number;
     DISTANCE_USED_RECOUP_SHARE_FIRST_TURN: number;
-    DISTRIBUTION_DEFAULT: Record<number, number>;
     FADE_PER_S: number;
     FLAG_AREA_THICKNESS: number;
     FLAG_AREA_RADIUS: number;

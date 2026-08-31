@@ -574,7 +574,8 @@ export const renderWillpowerBidOpacities = (flakture, opacity) => {
 export const rerenderFlag = (flakture, side) => {
     const { ruleset, gameState, gameMovement, renderRatio } = flakture;
     const center = flagCenter(ruleset, side, gameState, gameMovement);
-    const flagProps = flagLooseCircleProps(center, isLooseFlag(gameMovement?.flags[side] || gameState.flags[side]));
+    const flag = gameMovement ? gameMovement.flags[side] : gameState.flags[side];
+    const flagProps = flagLooseCircleProps(center, isLooseFlag(flag));
     const flagElem = flakture.elem(`flag-image-${side}`);
     flagElem.setAttribute("x", (renderRatio * (center.x - FLAG_DISPLAY_W / 2)).toString());
     flagElem.setAttribute("y", (renderRatio * (center.y - FLAG_DISPLAY_H / 2)).toString());

@@ -14,14 +14,7 @@ export const RULESETS: Record<RulesetName, Ruleset> = {
         DISTANCE_MAX: BOARD_W * 4,
         DISTANCE_PER_TURN: BOARD_W * 0.5,
         DISTANCE_USED_RECOUP_SHARE_FIRST_TURN: 0.2,
-        
-        DISTRIBUTION_DEFAULT: {
-            0.1: 195,
-            0.3: 324,
-            0.7: 226,
-            1.0: 275
-        },
-        
+
         FADE_PER_S: 0.6,
         
         FLAG_AREA_THICKNESS: 6,
@@ -45,7 +38,7 @@ export const RULESETS: Record<RulesetName, Ruleset> = {
         
         TIME_SLICE_S: 1 / 30.0,
         
-        UNUSABLE_SPACE_WIDTH: 5,
+        UNUSABLE_SPACE_WIDTH: BOARD_W * 0.05,
         
         WILLPOWER_INITIAL: 20,
         WILLPOWER_PER_INITIATIVE: 1,
