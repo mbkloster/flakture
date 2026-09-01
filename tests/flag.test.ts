@@ -285,7 +285,7 @@ describe("CTF State flag transition", function () {
         const newCtfState = stopGameMovement(ruleset, ctfStateFlagsHeld, movement, turn);
         expect(newCtfState.winner).toBeUndefined();
         expect(newCtfState.pieces[leftHolderIndex].dead).toBeTruthy();
-        expect(newCtfState.flags.left).toEqual({x: leftHolder.x, y: leftHolder.y, untilDecidingTurnNumber: 2 + ruleset.FLAG_LOOSE_TURNS});
+        expect(newCtfState.flags.left).toEqual({x: leftHolder.x, y: leftHolder.y, untilDecidingTurnNumber: 2 + ruleset.FLAG_LOOSE_TURNS + 1});
     });
 
     it("kill the holder of the Right flag from a collision with a normie piece", () => {
@@ -311,7 +311,7 @@ describe("CTF State flag transition", function () {
         const newCtfState = stopGameMovement(ruleset, ctfStateFlagsHeld, movement, turn);
         expect(newCtfState.winner).toBeUndefined();
         expect(newCtfState.pieces[rightHolderIndex].dead).toBeTruthy();
-        expect(newCtfState.flags.right).toEqual({x: rightHolder.x, y: rightHolder.y, untilDecidingTurnNumber: 2 + ruleset.FLAG_LOOSE_TURNS});
+        expect(newCtfState.flags.right).toEqual({x: rightHolder.x, y: rightHolder.y, untilDecidingTurnNumber: 2 + ruleset.FLAG_LOOSE_TURNS + 1});
     });
 
     it("allows Left to retake Right's flag", () => {

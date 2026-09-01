@@ -152,7 +152,7 @@ export const runTimeSlice = (ruleset: Ruleset, ctfGameState: CtfGameState, movem
                 if (winner === Side.left) {
                     if (movement.flags[winner] === rightPieceIndex) {
                         flagCarriers++;
-                        movement.flags[winner] = { x: rightPiece.x, y: rightPiece.y, untilDecidingTurnNumber: ctfGameState.decidingTurnNumber + ruleset.FLAG_LOOSE_TURNS};
+                        movement.flags[winner] = { x: rightPiece.x, y: rightPiece.y, untilDecidingTurnNumber: ctfGameState.decidingTurnNumber + ruleset.FLAG_LOOSE_TURNS + 1};
                     }
                     if (movement.flags[opponentSide(winner)] === leftPieceIndex) {
                         flagCarriers++;
@@ -167,7 +167,7 @@ export const runTimeSlice = (ruleset: Ruleset, ctfGameState: CtfGameState, movem
                 } else {
                     if (movement.flags[winner] === leftPieceIndex) {
                         flagCarriers++;
-                        movement.flags[winner] = { x: leftPiece.x, y: leftPiece.y, untilDecidingTurnNumber: ctfGameState.decidingTurnNumber + ruleset.FLAG_LOOSE_TURNS};
+                        movement.flags[winner] = { x: leftPiece.x, y: leftPiece.y, untilDecidingTurnNumber: ctfGameState.decidingTurnNumber + ruleset.FLAG_LOOSE_TURNS + 1};
                     }
                     if (movement.flags[opponentSide(winner)] === rightPieceIndex) {
                         flagCarriers++;
@@ -330,7 +330,7 @@ export const stopGameMovement = (ruleset: Ruleset, ctfGameState: CtfGameState, m
     }
     newGameState.flags = {...movement.flags};
     BothSides.forEach(side => {
-        if (isLooseFlag(newGameState.flags[side]) && newGameState.flags[side].untilDecidingTurnNumber <= newGameState.decidingTurnNumber) {
+        if (isLooseFlag(newGameState.flags[side]) && newGameState.flags[side].untilDecidingTurnNumber <= newGameState.decidingTurnNumber + 1) {
             newGameState.flags[side] = null;
         }
     });
