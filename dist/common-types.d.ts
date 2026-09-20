@@ -110,6 +110,7 @@ export type PieceMove = {
     speed: number;
 };
 export type SideMove = {
+    meta?: any[];
     pieces: Record<number, PieceMove>;
     redeployments: Record<number, {
         x: number;

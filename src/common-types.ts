@@ -110,6 +110,7 @@ export type Ruleset = {
 export type PieceMove = {destinations: {x: number, y: number}[], speed: number};
 
 export type SideMove = {
+    meta?: any[]
     pieces: Record<number, PieceMove>
     redeployments: Record<number, {x: number, y: number}>
     willpowerBid: number

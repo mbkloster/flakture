@@ -27,7 +27,7 @@ export const RULESETS = {
         ],
         TIME_SLICE_S: 1 / 30.0,
         UNUSABLE_SPACE_WIDTH: BOARD_W * 0.05,
-        WILLPOWER_INITIAL: 20,
+        WILLPOWER_INITIAL: 55,
         WILLPOWER_PER_INITIATIVE: 1,
         WILLPOWER_TO_RESURRECT: 1
     }
